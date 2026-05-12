@@ -43,7 +43,33 @@ actor GroqVisionService {
 
     private let systemPrompt = "Você é um validador de hidratação. Responda APENAS JSON válido no formato {\"valid\":bool,\"reason\":string}. Não escreva nada antes ou depois do JSON."
 
-    private let userPrompt = "Analise a imagem. valid=true se: há uma pessoa ou mão segurando ou tocando um recipiente de bebida (copo, caneca, garrafa, squeeze) — pode estar vazio, pode ter qualquer líquido, o que importa é o recipiente estar presente e a pessoa interagindo com ele. valid=false apenas se: não há recipiente visível, a imagem é claramente uma foto de tela ou foto antiga não tirada ao vivo, ou não há nenhuma pessoa/mão na imagem. reason: justifique em 1 frase em português."
+    private let userPrompt = """
+    Esta é uma captura de webcam ao vivo de um sistema de hidratação. Avalie DUAS condições obrigatórias:
+
+    CONDIÇÃO 1 — ROSTO HUMANO: pelo menos um rosto humano real está parcialmente visível e identificável. Critério mínimo: olhos, nariz ou boca detectáveis com clareza. NÃO conta: mãos isoladas, corpo sem rosto, silhuetas, reflexos, bonecos, fotos de pessoas, avatares.
+
+    CONDIÇÃO 2 — RECIPIENTE EM USO: um recipiente de bebida (copo, garrafa, caneca, squeeze, xícara, copo descartável, garrafa esportiva) está visível E a pessoa está interagindo — segurando, levando à boca, ou claramente prestes a beber. O recipiente pode estar vazio. O recipiente deve estar em primeiro plano ou visivelmente associado à pessoa, não apenas ao fundo.
+
+    valid=true SOMENTE SE as duas condições forem satisfeitas simultaneamente.
+
+    valid=false se qualquer um dos seguintes for verdadeiro:
+    - Nenhum rosto humano identificável na imagem
+    - Nenhum recipiente de bebida visível ou associado à pessoa
+    - A imagem exibe uma tela (monitor, celular, TV mostrando outra imagem ou vídeo)
+    - A imagem é foto impressa, foto de foto, ou imagem claramente não capturada ao vivo agora
+    - A imagem está muito escura, borrada ou obstruída para avaliar qualquer condição
+    - O recipiente contém comida sólida (prato, tigela de comida) e não bebida
+    - Há dúvida razoável sobre qualquer condição — na dúvida, prefira false
+
+    reason: escreva 1 frase curta em português com tom bem-humorado e leve. Use criatividade baseada no caso específico detectado. Exemplos de tom (não copie, crie variações):
+    - Rosto presente mas sem recipiente → "Seu rosto é lindo, mas cadê a água?"
+    - Recipiente presente mas sem rosto → "Ótimo copo! Mas preciso ver você também, não só ele."
+    - Imagem escura/borrada → "Tá com medo da câmera? Aparece aí!"
+    - Foto de tela detectada → "Tentou me enganar com printscreen? Não rola não."
+    - Foto de foto → "Foto antiga não vale, precisa ser ao vivo!"
+    - valid=true, pessoa bebendo → algo animado celebrando a hidratação
+    - valid=true, pessoa segurando → algo incentivando a beber logo
+    """
 
     func validate(jpegData: Data, model: String) async throws -> ValidationResult {
         let key = try KeychainService.shared.getGroqKey()
