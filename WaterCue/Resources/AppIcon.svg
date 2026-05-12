@@ -1,0 +1,47 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="dropGradient" x1="340" y1="180" x2="680" y2="820" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#8DEBFF"/>
+      <stop offset="50%" stop-color="#27B7F5"/>
+      <stop offset="100%" stop-color="#0077C8"/>
+    </linearGradient>
+
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="28" stdDeviation="30" flood-color="#0077AA" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- water drop (no background) -->
+  <path
+    d="M512 162
+       C512 162 284 421 284 596
+       C284 731 384 836 512 836
+       C640 836 740 731 740 596
+       C740 421 512 162 512 162Z"
+    fill="url(#dropGradient)"
+    filter="url(#softShadow)"
+  />
+
+  <!-- inner highlight -->
+  <path
+    d="M403 410 C358 472 336 535 336 590 C336 683 397 756 481 778"
+    fill="none"
+    stroke="#FFFFFF"
+    stroke-width="38"
+    stroke-linecap="round"
+    opacity="0.42"
+  />
+
+  <!-- glossy highlight -->
+  <ellipse cx="454" cy="362" rx="72" ry="112" fill="#FFFFFF" opacity="0.38" transform="rotate(31 424 362)"/>
+
+  <!-- small crisp edge highlight -->
+  <path
+    d="M512 196 C512 196 701 424 701 590"
+    fill="none"
+    stroke="#FFFFFF"
+    stroke-width="16"
+    stroke-linecap="round"
+    opacity="0.24"
+  />
+</svg>

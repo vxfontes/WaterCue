@@ -1,0 +1,585 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1A26B044D9571F6BCB1F4C9C /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD84755E97FE74A3DB7E24A /* AppState.swift */; };
+		276868D636E28C666581158D /* DatabaseServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B38A3D04AE0EE574C132F3D /* DatabaseServiceTests.swift */; };
+		2D14E1A39449BC4209A6DF6E /* HydrationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA56506CA4DCFB341A40C1A2 /* HydrationSettings.swift */; };
+		408B9C579BC96CA9392037B2 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D4459691FF372658F41B21 /* libsqlite3.tbd */; };
+		4276D4AD4887FF0EC5E57F86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 019D768581762EB49AA3E112 /* Assets.xcassets */; };
+		598A2A6806998BE1AE13B634 /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F000710222BDB584F6BA358A /* WarningView.swift */; };
+		5DB7D8B852F36AE4DB29A33D /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF602975E777CF28FCD99DBA /* StatsView.swift */; };
+		621EE9D7102C9896B7238534 /* TimerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E48000E8D6D5BCC76A12D2 /* TimerService.swift */; };
+		65AE66DFF202577A15DA43BE /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFBF89BAC16AB56AF34A03A /* DatabaseService.swift */; };
+		6A4DB889CEB0848647DF1045 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C5A917F8D203A9E8B32291 /* AppDelegate.swift */; };
+		6B9088C73217BC1277AA258C /* ValidationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6AC8E5ED0FB78FABE1A854 /* ValidationView.swift */; };
+		6F7AAD51B691D276C443EA4D /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD759355F8158F6CBF9D002 /* NotificationService.swift */; };
+		79BB301E881D337BEF604478 /* AppIcon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 209C2B82C0B7845BD4DF5D08 /* AppIcon.svg */; };
+		7E4A6A4B8862D3B36076B0A0 /* CameraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0267C94867D644DEA9A6A58E /* CameraService.swift */; };
+		86C871345FDBEA4A8C4D10A5 /* WaterCueApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5462B14474B47A7CBAE32C /* WaterCueApp.swift */; };
+		8D15CC3E5F72DD353D2FE78D /* GroqVisionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1CFA7B5FA5CCCDE91A8CB5 /* GroqVisionService.swift */; };
+		935E29FBB9723758DBFC4B50 /* HydrationEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C4E6C8D1AA800F867E999C /* HydrationEvent.swift */; };
+		A745E609FF733D44CB4AFEB2 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D4459691FF372658F41B21 /* libsqlite3.tbd */; };
+		B45D3DA69FF9EC085479027F /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1ACABACF060C2E4D53C0CE0 /* OnboardingView.swift */; };
+		B4723C85A0292D5CA74FEE84 /* LockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0AC3E81587C7639AC69B51B /* LockService.swift */; };
+		D2B78364830102EEBB8EFC9D /* EmergencyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B21D2314B3EFB57DBD5377A /* EmergencyButton.swift */; };
+		D96DC55894276B4E4B98DBB1 /* LockOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9AEA9A3F9B628B6866E8F2 /* LockOverlayView.swift */; };
+		DC38A465FE7D4540B737F01E /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E549685ADCB8EB7B1B0C3E40 /* KeychainService.swift */; };
+		EC0F349AFE4AD1BADA229AD2 /* AutostartService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB8C72E317BDB20322AEC7F /* AutostartService.swift */; };
+		F3E83048D3D289FBB166CC21 /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C621DA5B48E5F7CA86139E1 /* MenuBarView.swift */; };
+		F970AE9D14C234479B2AB193 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972E0236FD4A1DE0B0CCC1C3 /* SettingsView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1359AA7852C985F0A506F0EA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5F3C69E350EC64EB21CBC554 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6BACC0A628C10EE8AE74D402;
+			remoteInfo = WaterCue;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		019D768581762EB49AA3E112 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0267C94867D644DEA9A6A58E /* CameraService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraService.swift; sourceTree = "<group>"; };
+		09C4E6C8D1AA800F867E999C /* HydrationEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HydrationEvent.swift; sourceTree = "<group>"; };
+		0B38A3D04AE0EE574C132F3D /* DatabaseServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseServiceTests.swift; sourceTree = "<group>"; };
+		18055E66CA4EC4286E55B500 /* WaterCue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WaterCue.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		209C2B82C0B7845BD4DF5D08 /* AppIcon.svg */ = {isa = PBXFileReference; lastKnownFileType = text; path = AppIcon.svg; sourceTree = "<group>"; };
+		2B9AEA9A3F9B628B6866E8F2 /* LockOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockOverlayView.swift; sourceTree = "<group>"; };
+		2BD84755E97FE74A3DB7E24A /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		3B6AC8E5ED0FB78FABE1A854 /* ValidationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationView.swift; sourceTree = "<group>"; };
+		4B21D2314B3EFB57DBD5377A /* EmergencyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyButton.swift; sourceTree = "<group>"; };
+		52D4459691FF372658F41B21 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		5F83C49F8F1D89A817AACABB /* WaterCueTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WaterCueTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B5462B14474B47A7CBAE32C /* WaterCueApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterCueApp.swift; sourceTree = "<group>"; };
+		8C1CFA7B5FA5CCCDE91A8CB5 /* GroqVisionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroqVisionService.swift; sourceTree = "<group>"; };
+		8C621DA5B48E5F7CA86139E1 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
+		8EFBF89BAC16AB56AF34A03A /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
+		972E0236FD4A1DE0B0CCC1C3 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		9CB8C72E317BDB20322AEC7F /* AutostartService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutostartService.swift; sourceTree = "<group>"; };
+		A9E48000E8D6D5BCC76A12D2 /* TimerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerService.swift; sourceTree = "<group>"; };
+		AD456F7031FDDC8742E73014 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		AF602975E777CF28FCD99DBA /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		BCD759355F8158F6CBF9D002 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		D1ACABACF060C2E4D53C0CE0 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		D9C5A917F8D203A9E8B32291 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DA56506CA4DCFB341A40C1A2 /* HydrationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HydrationSettings.swift; sourceTree = "<group>"; };
+		E18A307854AA51379F15ED13 /* WaterCue.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WaterCue.entitlements; sourceTree = "<group>"; };
+		E549685ADCB8EB7B1B0C3E40 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		F000710222BDB584F6BA358A /* WarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningView.swift; sourceTree = "<group>"; };
+		F0AC3E81587C7639AC69B51B /* LockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockService.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5A2647C1B61E5DFC815AC054 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A745E609FF733D44CB4AFEB2 /* libsqlite3.tbd in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C87F747668D1C0DC26CF6F03 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				408B9C579BC96CA9392037B2 /* libsqlite3.tbd in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0028D740E7C20D45E972A8CC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				18055E66CA4EC4286E55B500 /* WaterCue.app */,
+				5F83C49F8F1D89A817AACABB /* WaterCueTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		36F0E52528A9A7016D614733 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				9CB8C72E317BDB20322AEC7F /* AutostartService.swift */,
+				0267C94867D644DEA9A6A58E /* CameraService.swift */,
+				8EFBF89BAC16AB56AF34A03A /* DatabaseService.swift */,
+				8C1CFA7B5FA5CCCDE91A8CB5 /* GroqVisionService.swift */,
+				E549685ADCB8EB7B1B0C3E40 /* KeychainService.swift */,
+				F0AC3E81587C7639AC69B51B /* LockService.swift */,
+				BCD759355F8158F6CBF9D002 /* NotificationService.swift */,
+				A9E48000E8D6D5BCC76A12D2 /* TimerService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		528741CBCA0BB3115B414E5D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				209C2B82C0B7845BD4DF5D08 /* AppIcon.svg */,
+				019D768581762EB49AA3E112 /* Assets.xcassets */,
+				AD456F7031FDDC8742E73014 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		846D71184649FCC69E705F22 /* WaterCue */ = {
+			isa = PBXGroup;
+			children = (
+				D9C5A917F8D203A9E8B32291 /* AppDelegate.swift */,
+				2BD84755E97FE74A3DB7E24A /* AppState.swift */,
+				E18A307854AA51379F15ED13 /* WaterCue.entitlements */,
+				7B5462B14474B47A7CBAE32C /* WaterCueApp.swift */,
+				DE9CA90B3FD1FA6EC57ED87E /* Models */,
+				528741CBCA0BB3115B414E5D /* Resources */,
+				36F0E52528A9A7016D614733 /* Services */,
+				EBB0BB817D96C5451E4B768E /* Views */,
+			);
+			path = WaterCue;
+			sourceTree = "<group>";
+		};
+		C037D98DF6DD02D1DDE80747 /* WaterCueTests */ = {
+			isa = PBXGroup;
+			children = (
+				0B38A3D04AE0EE574C132F3D /* DatabaseServiceTests.swift */,
+			);
+			path = WaterCueTests;
+			sourceTree = "<group>";
+		};
+		D627BD604E6BDE968F57AAD6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				52D4459691FF372658F41B21 /* libsqlite3.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DE9CA90B3FD1FA6EC57ED87E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				09C4E6C8D1AA800F867E999C /* HydrationEvent.swift */,
+				DA56506CA4DCFB341A40C1A2 /* HydrationSettings.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		EBB0BB817D96C5451E4B768E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4B21D2314B3EFB57DBD5377A /* EmergencyButton.swift */,
+				2B9AEA9A3F9B628B6866E8F2 /* LockOverlayView.swift */,
+				8C621DA5B48E5F7CA86139E1 /* MenuBarView.swift */,
+				D1ACABACF060C2E4D53C0CE0 /* OnboardingView.swift */,
+				972E0236FD4A1DE0B0CCC1C3 /* SettingsView.swift */,
+				AF602975E777CF28FCD99DBA /* StatsView.swift */,
+				3B6AC8E5ED0FB78FABE1A854 /* ValidationView.swift */,
+				F000710222BDB584F6BA358A /* WarningView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FDAF21CB13813976BB735CB1 = {
+			isa = PBXGroup;
+			children = (
+				846D71184649FCC69E705F22 /* WaterCue */,
+				C037D98DF6DD02D1DDE80747 /* WaterCueTests */,
+				D627BD604E6BDE968F57AAD6 /* Frameworks */,
+				0028D740E7C20D45E972A8CC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6BACC0A628C10EE8AE74D402 /* WaterCue */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7CB49CD5431FD6CB41255A5C /* Build configuration list for PBXNativeTarget "WaterCue" */;
+			buildPhases = (
+				3F0509100640E09C2149A8E9 /* Sources */,
+				2E36E0C2C2741CBBEC3B91D9 /* Resources */,
+				C87F747668D1C0DC26CF6F03 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WaterCue;
+			packageProductDependencies = (
+			);
+			productName = WaterCue;
+			productReference = 18055E66CA4EC4286E55B500 /* WaterCue.app */;
+			productType = "com.apple.product-type.application";
+		};
+		815F267F7223456D13E17485 /* WaterCueTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D4F2EEF2E79A147F0AE0A67E /* Build configuration list for PBXNativeTarget "WaterCueTests" */;
+			buildPhases = (
+				F01F33006EBCB861CDB0A17C /* Sources */,
+				5A2647C1B61E5DFC815AC054 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3FEA50BE7A7D691078E28C7E /* PBXTargetDependency */,
+			);
+			name = WaterCueTests;
+			packageProductDependencies = (
+			);
+			productName = WaterCueTests;
+			productReference = 5F83C49F8F1D89A817AACABB /* WaterCueTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5F3C69E350EC64EB21CBC554 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					6BACC0A628C10EE8AE74D402 = {
+						ProvisioningStyle = Automatic;
+					};
+					815F267F7223456D13E17485 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 9DAF117AF486B79747285B1C /* Build configuration list for PBXProject "WaterCue" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = FDAF21CB13813976BB735CB1;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 0028D740E7C20D45E972A8CC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6BACC0A628C10EE8AE74D402 /* WaterCue */,
+				815F267F7223456D13E17485 /* WaterCueTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2E36E0C2C2741CBBEC3B91D9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				79BB301E881D337BEF604478 /* AppIcon.svg in Resources */,
+				4276D4AD4887FF0EC5E57F86 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3F0509100640E09C2149A8E9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6A4DB889CEB0848647DF1045 /* AppDelegate.swift in Sources */,
+				1A26B044D9571F6BCB1F4C9C /* AppState.swift in Sources */,
+				EC0F349AFE4AD1BADA229AD2 /* AutostartService.swift in Sources */,
+				7E4A6A4B8862D3B36076B0A0 /* CameraService.swift in Sources */,
+				65AE66DFF202577A15DA43BE /* DatabaseService.swift in Sources */,
+				D2B78364830102EEBB8EFC9D /* EmergencyButton.swift in Sources */,
+				8D15CC3E5F72DD353D2FE78D /* GroqVisionService.swift in Sources */,
+				935E29FBB9723758DBFC4B50 /* HydrationEvent.swift in Sources */,
+				2D14E1A39449BC4209A6DF6E /* HydrationSettings.swift in Sources */,
+				DC38A465FE7D4540B737F01E /* KeychainService.swift in Sources */,
+				D96DC55894276B4E4B98DBB1 /* LockOverlayView.swift in Sources */,
+				B4723C85A0292D5CA74FEE84 /* LockService.swift in Sources */,
+				F3E83048D3D289FBB166CC21 /* MenuBarView.swift in Sources */,
+				6F7AAD51B691D276C443EA4D /* NotificationService.swift in Sources */,
+				B45D3DA69FF9EC085479027F /* OnboardingView.swift in Sources */,
+				F970AE9D14C234479B2AB193 /* SettingsView.swift in Sources */,
+				5DB7D8B852F36AE4DB29A33D /* StatsView.swift in Sources */,
+				621EE9D7102C9896B7238534 /* TimerService.swift in Sources */,
+				6B9088C73217BC1277AA258C /* ValidationView.swift in Sources */,
+				598A2A6806998BE1AE13B634 /* WarningView.swift in Sources */,
+				86C871345FDBEA4A8C4D10A5 /* WaterCueApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F01F33006EBCB861CDB0A17C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				276868D636E28C666581158D /* DatabaseServiceTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3FEA50BE7A7D691078E28C7E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6BACC0A628C10EE8AE74D402 /* WaterCue */;
+			targetProxy = 1359AA7852C985F0A506F0EA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		16991F311C37D39211918575 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = WaterCue/WaterCue.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 0101000;
+				DEVELOPMENT_TEAM = 876958ZD28;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = WaterCue/Resources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = WaterCue;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.1.0;
+				OTHER_LDFLAGS = "-lsqlite3";
+				PRODUCT_BUNDLE_IDENTIFIER = com.vxfontes.WaterCue;
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.10;
+			};
+			name = Release;
+		};
+		31F2C092698E65CFB2869495 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.defender360.WaterCueTests;
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.10;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WaterCue.app/Contents/MacOS/WaterCue";
+			};
+			name = Release;
+		};
+		3ED64579C6DBAB324A2D1E58 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		AA51C61C0F270AFA593E5EC9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = WaterCue/WaterCue.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 0101000;
+				DEVELOPMENT_TEAM = 876958ZD28;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = WaterCue/Resources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = WaterCue;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.1.0;
+				OTHER_LDFLAGS = "-lsqlite3";
+				PRODUCT_BUNDLE_IDENTIFIER = com.vxfontes.WaterCue;
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.10;
+			};
+			name = Debug;
+		};
+		B8FFCBADFE93BF5460EC1A8C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.defender360.WaterCueTests;
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.10;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WaterCue.app/Contents/MacOS/WaterCue";
+			};
+			name = Debug;
+		};
+		C331781D9523F2014806879C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7CB49CD5431FD6CB41255A5C /* Build configuration list for PBXNativeTarget "WaterCue" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA51C61C0F270AFA593E5EC9 /* Debug */,
+				16991F311C37D39211918575 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		9DAF117AF486B79747285B1C /* Build configuration list for PBXProject "WaterCue" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C331781D9523F2014806879C /* Debug */,
+				3ED64579C6DBAB324A2D1E58 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D4F2EEF2E79A147F0AE0A67E /* Build configuration list for PBXNativeTarget "WaterCueTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B8FFCBADFE93BF5460EC1A8C /* Debug */,
+				31F2C092698E65CFB2869495 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5F3C69E350EC64EB21CBC554 /* Project object */;
+}
