@@ -54,7 +54,6 @@
 
             <Button x:Name="SaveBtn"
                     Grid.Column="2"
-                    Content="Salvar"
                     Height="36"
                     Click="Save_Click">
                 <Button.Template>

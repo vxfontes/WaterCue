@@ -88,7 +88,7 @@ public class LockService
     {
         var rects = new List<Rect>();
 
-        MonitorEnumDelegate callback = (hMon, _, _, _) =>
+        MonitorEnumDelegate callback = (IntPtr hMon, IntPtr _hdc, ref RECT _rc, IntPtr _data) =>
         {
             var info = new MONITORINFO { cbSize = Marshal.SizeOf<MONITORINFO>() };
             if (GetMonitorInfo(hMon, ref info))
