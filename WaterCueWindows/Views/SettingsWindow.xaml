@@ -1,9 +1,9 @@
 <Window x:Class="WaterCueWindows.Views.SettingsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="WaterCue - Configurações"
-        Width="520"
-        Height="680"
+        Title="WaterCue"
+        Width="760"
+        Height="720"
         ResizeMode="NoResize"
         WindowStyle="SingleBorderWindow"
         WindowStartupLocation="CenterScreen"
@@ -16,19 +16,40 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="0"
-                Style="{StaticResource CardBorderStyle}"
-                Background="{StaticResource AccentDimBrush}"
-                Padding="22,18"
-                Margin="0,0,0,16">
-            <StackPanel>
-                <TextBlock Text="Configurações"
-                           Style="{StaticResource WindowTitleTextStyle}" />
-                <TextBlock Text="Ajuste câmera, horários, Groq e comportamento do app no Windows."
-                           Style="{StaticResource BodyTextStyle}"
-                           Margin="0,6,0,0" />
-            </StackPanel>
-        </Border>
+        <Grid Grid.Row="0"
+              Margin="0,0,0,18">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="240" />
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0"
+                    Style="{StaticResource CardBorderStyle}"
+                    Background="{StaticResource HeroPanelBrush}"
+                    Padding="24,22"
+                    Margin="0,0,14,0">
+                <StackPanel>
+                    <TextBlock Text="Preferências do WaterCue"
+                               Style="{StaticResource WindowTitleTextStyle}" />
+                    <TextBlock Text="Ajuste câmera, horários, IA e comportamento do aplicativo."
+                               Style="{StaticResource BodyTextStyle}"
+                               Margin="0,8,0,0" />
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="1"
+                    Style="{StaticResource CardBorderStyle}"
+                    Padding="18">
+                <StackPanel>
+                    <TextBlock Text="Resumo"
+                               Style="{StaticResource SectionCaptionTextStyle}" />
+                    <TextBlock Text="Tudo aqui afeta o próximo ciclo de bloqueio."
+                               Style="{StaticResource BodyTextStyle}"
+                               Margin="0,8,0,0"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+        </Grid>
 
         <ScrollViewer Grid.Row="1"
                       VerticalScrollBarVisibility="Auto">
@@ -38,9 +59,10 @@
         <Grid Grid.Row="2"
               Margin="0,18,0,0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition />
+                <ColumnDefinition Width="140" />
                 <ColumnDefinition Width="12" />
                 <ColumnDefinition Width="140" />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
             <Button x:Name="CancelBtn"

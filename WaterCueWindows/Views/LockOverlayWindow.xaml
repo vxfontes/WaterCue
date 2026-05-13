@@ -11,39 +11,66 @@
     <Grid Background="{StaticResource LockOverlayGradientBrush}">
         <Grid x:Name="PrimaryContent"
               Visibility="Collapsed"
-              Margin="52">
+              Margin="60">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <Border Grid.Row="0"
-                    Background="#14FFFFFF"
-                    BorderBrush="#1FFFFFFF"
-                    BorderThickness="1"
-                    CornerRadius="18"
-                    Padding="24,20"
-                    Margin="0,0,0,26">
-                <StackPanel>
-                    <TextBlock Text="WaterCue"
-                               FontSize="12"
-                               FontWeight="SemiBold"
-                               Foreground="{StaticResource AccentBrightBrush}" />
-                    <TextBlock Text="Bloqueio por hidratação"
-                               FontFamily="Segoe UI Variable Display, Segoe UI Variable, Segoe UI"
-                               FontSize="30"
-                               FontWeight="SemiBold"
-                               Foreground="{StaticResource OverlayTextBrush}"
-                               Margin="0,6,0,0" />
-                    <TextBlock Text="Segure seu copo ou garrafa e tire uma foto para desbloquear."
-                               FontSize="14"
-                               Foreground="{StaticResource OverlayMutedBrush}"
-                               Margin="0,8,0,0"
-                               TextWrapping="Wrap"
-                               MaxWidth="520" />
-                </StackPanel>
-            </Border>
+            <Grid Grid.Row="0"
+                  Margin="0,0,0,24">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="260" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0"
+                        Background="#16FFFFFF"
+                        BorderBrush="#22FFFFFF"
+                        BorderThickness="1"
+                        CornerRadius="20"
+                        Padding="24,22"
+                        Margin="0,0,18,0">
+                    <StackPanel>
+                        <TextBlock Text="WaterCue"
+                                   FontSize="12"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource AccentBrightBrush}" />
+                        <TextBlock Text="Bloqueio por hidratação"
+                                   FontFamily="Segoe UI Variable Display, Segoe UI Variable, Segoe UI"
+                                   FontSize="32"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource OverlayTextBrush}"
+                                   Margin="0,8,0,0" />
+                        <TextBlock Text="Segure seu copo ou garrafa e tire uma foto para desbloquear."
+                                   FontSize="14"
+                                   Foreground="{StaticResource OverlayMutedBrush}"
+                                   Margin="0,10,0,0"
+                                   TextWrapping="Wrap"
+                                   MaxWidth="540" />
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="1"
+                        Background="#10FFFFFF"
+                        BorderBrush="#1DFFFFFF"
+                        BorderThickness="1"
+                        CornerRadius="20"
+                        Padding="18">
+                    <StackPanel>
+                        <TextBlock Text="Regras"
+                                   FontSize="12"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource AccentBrightBrush}" />
+                        <TextBlock Text="A foto precisa mostrar você e o recipiente de bebida."
+                                   FontSize="13"
+                                   Foreground="{StaticResource OverlayMutedBrush}"
+                                   Margin="0,8,0,0"
+                                   TextWrapping="Wrap" />
+                    </StackPanel>
+                </Border>
+            </Grid>
 
             <Grid Grid.Row="1"
                   x:Name="CameraArea"
@@ -51,10 +78,10 @@
                   VerticalAlignment="Center">
                 <StackPanel x:Name="CameraPanel"
                             HorizontalAlignment="Center">
-                    <Border CornerRadius="22"
+                    <Border CornerRadius="24"
                             ClipToBounds="True"
-                            Width="560"
-                            Height="390"
+                            Width="620"
+                            Height="408"
                             Margin="0,0,0,18"
                             Background="{StaticResource OverlaySurfaceBrush}"
                             BorderBrush="{StaticResource OverlayBorderBrush}"
@@ -62,7 +89,7 @@
                         <Border.Effect>
                             <DropShadowEffect x:Name="CameraGlow"
                                               Color="#FF3AA0F3"
-                                              BlurRadius="28"
+                                              BlurRadius="30"
                                               ShadowDepth="0"
                                               Opacity="0" />
                         </Border.Effect>
@@ -70,8 +97,8 @@
                             <Image x:Name="CameraPreview"
                                    Stretch="UniformToFill" />
                             <Border x:Name="NoCameraOverlay"
-                                    Background="#CC0F1727"
-                                    CornerRadius="22"
+                                    Background="#CC0E1524"
+                                    CornerRadius="24"
                                     Visibility="Visible">
                                 <StackPanel HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
@@ -98,7 +125,7 @@
                                             HorizontalAlignment="Center" />
                                 </StackPanel>
                             </Border>
-                            <Border CornerRadius="22"
+                            <Border CornerRadius="24"
                                     BorderThickness="1.5">
                                 <Border.BorderBrush>
                                     <SolidColorBrush x:Name="CameraRingBrush"
@@ -113,7 +140,7 @@
                             HorizontalAlignment="Center"
                             IsEnabled="False"
                             Style="{StaticResource PrimaryButtonStyle}"
-                            Width="240"
+                            Width="250"
                             Cursor="Hand">
                         <TextBlock x:Name="CaptureButtonLabel"
                                    Text="Aguardando câmera..."
@@ -128,13 +155,13 @@
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center">
                     <Border Background="#14FFFFFF"
-                            BorderBrush="#1FFFFFFF"
+                            BorderBrush="#20FFFFFF"
                             BorderThickness="1"
-                            CornerRadius="18"
-                            Padding="26">
+                            CornerRadius="20"
+                            Padding="28">
                         <StackPanel>
                             <ProgressBar IsIndeterminate="True"
-                                         Width="240"
+                                         Width="250"
                                          Height="4"
                                          Margin="0,0,0,14"
                                          Foreground="{StaticResource AccentBrightBrush}" />
@@ -152,12 +179,12 @@
                             VerticalAlignment="Center"
                             MaxWidth="460">
                     <Border Background="#14FFFFFF"
-                            BorderBrush="#1FFFFFFF"
+                            BorderBrush="#20FFFFFF"
                             BorderThickness="1"
-                            CornerRadius="18"
+                            CornerRadius="20"
                             Padding="28">
                         <StackPanel>
-                            <TextBlock Text="Validacao falhou"
+                            <TextBlock Text="Validação falhou"
                                        FontSize="24"
                                        FontWeight="SemiBold"
                                        Foreground="{StaticResource OverlayTextBrush}"
@@ -203,12 +230,12 @@
                     Visibility="Collapsed"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    MaxWidth="480">
+                    MaxWidth="500">
             <Border Background="#14FFFFFF"
-                    BorderBrush="#1FFFFFFF"
+                    BorderBrush="#1DFFFFFF"
                     BorderThickness="1"
-                    CornerRadius="18"
-                    Padding="28">
+                    CornerRadius="20"
+                    Padding="30">
                 <StackPanel>
                     <TextBlock Text="Volte para o monitor principal"
                                FontFamily="Segoe UI Variable Display, Segoe UI Variable, Segoe UI"
@@ -222,7 +249,7 @@
                                HorizontalAlignment="Center"
                                TextAlignment="Center"
                                TextWrapping="Wrap"
-                               Margin="0,10,0,0" />
+                               Margin="0,12,0,0" />
                 </StackPanel>
             </Border>
         </StackPanel>

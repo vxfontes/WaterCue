@@ -74,7 +74,7 @@ public class AppState : INotifyPropertyChanged
     {
         if (_warningWindow != null) return;
         LockState = LockState.Warning;
-        var winType = Type.GetType("WaterCueWindows.Views.WarningWindow, WaterCueWindows");
+        var winType = Type.GetType("WaterCueWindows.Views.WarningWindow, WaterCue");
         if (winType != null)
         {
             _warningWindow = (Window?)Activator.CreateInstance(winType);

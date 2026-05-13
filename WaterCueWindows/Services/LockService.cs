@@ -60,7 +60,7 @@ public class LockService
 
     private static Window CreateOverlayWindow(Rect dipRect, bool isPrimary)
     {
-        var winType = Type.GetType("WaterCueWindows.Views.LockOverlayWindow, WaterCueWindows");
+        var winType = Type.GetType("WaterCueWindows.Views.LockOverlayWindow, WaterCue");
         var win = winType != null
             ? (Window)Activator.CreateInstance(winType)!
             : new Window { Background = System.Windows.Media.Brushes.Black };

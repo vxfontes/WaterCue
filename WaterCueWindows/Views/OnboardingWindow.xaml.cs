@@ -39,7 +39,7 @@ public partial class OnboardingWindow : Window
                 BuildApiKey();
                 break;
             case 3:
-                BuildIntervals();
+                BuildMetrics();
                 break;
             default:
                 BuildDone();
@@ -52,27 +52,25 @@ public partial class OnboardingWindow : Window
         ProgressDots.Items.Clear();
         for (int i = 0; i < TotalSteps; i++)
         {
-            var border = new Border
+            ProgressDots.Items.Add(new Border
             {
-                Width = i == current ? 36 : 18,
+                Width = i == current ? 42 : 18,
                 Height = 8,
                 CornerRadius = new CornerRadius(999),
                 Margin = new Thickness(0, 0, 8, 0),
                 Background = i <= current ? Brush("AccentBrush") : Brush("SurfaceBrush")
-            };
-            ProgressDots.Items.Add(border);
+            });
         }
     }
 
-    private TextBlock H1(string text) => new()
+    private TextBlock StepTitle(string text) => new()
     {
         Text = text,
         FontFamily = new FontFamily("Segoe UI Variable Display, Segoe UI Variable, Segoe UI"),
-        FontSize = 27,
+        FontSize = 30,
         FontWeight = FontWeights.SemiBold,
         Foreground = Brush("TextPrimaryBrush"),
         TextWrapping = TextWrapping.Wrap,
-        TextAlignment = TextAlignment.Left,
         Margin = new Thickness(0, 0, 0, 8)
     };
 
@@ -82,7 +80,6 @@ public partial class OnboardingWindow : Window
         FontSize = 13,
         Foreground = Brush("TextSecondaryBrush"),
         TextWrapping = TextWrapping.Wrap,
-        TextAlignment = TextAlignment.Left,
         Margin = new Thickness(0, 0, 0, 18)
     };
 
@@ -95,19 +92,19 @@ public partial class OnboardingWindow : Window
         Margin = new Thickness(0, 0, 0, 10)
     };
 
-    private Button PrimaryButton(string label, RoutedEventHandler handler)
+    private TextBlock CardLine(string text) => new()
     {
-        var btn = new Button
-        {
-            Content = label,
-            Style = (Style)FindResource("PrimaryButtonStyle"),
-            HorizontalAlignment = HorizontalAlignment.Left,
-            MinWidth = 150,
-            Margin = new Thickness(0, 4, 0, 0)
-        };
-        btn.Click += handler;
-        return btn;
-    }
+        Text = text,
+        Foreground = Brush("TextPrimaryBrush"),
+        FontSize = 13,
+        Margin = new Thickness(0, 0, 0, 8)
+    };
+
+    private TextBlock FieldLabel(string text) => new()
+    {
+        Text = text,
+        Style = (Style)FindResource("FieldLabelTextStyle")
+    };
 
     private Border InfoCard(UIElement content)
     {
@@ -121,21 +118,35 @@ public partial class OnboardingWindow : Window
         };
     }
 
+    private Button PrimaryButton(string label, RoutedEventHandler handler)
+    {
+        var button = new Button
+        {
+            Content = label,
+            Style = (Style)FindResource("PrimaryButtonStyle"),
+            HorizontalAlignment = HorizontalAlignment.Left,
+            MinWidth = 160,
+            Margin = new Thickness(0, 2, 0, 0)
+        };
+        button.Click += handler;
+        return button;
+    }
+
     private void BuildWelcome()
     {
         StepContent.Children.Add(Badge("PASSO 1 DE 5"));
-        StepContent.Children.Add(H1("Configure o WaterCue para o seu Windows"));
+        StepContent.Children.Add(StepTitle("Deixe o WaterCue pronto para o seu ritmo"));
         StepContent.Children.Add(Body(
-            "Este assistente prepara câmera, IA e intervalos com uma interface mais desktop. "
-            + "As notificações já funcionam nativamente no Windows."));
+            "Este assistente configura câmera, IA e as quatro métricas principais de hidratação "
+            + "com um fluxo enxuto para Windows."));
 
         StepContent.Children.Add(InfoCard(new StackPanel
         {
             Children =
             {
-                SummaryLine("Fluxo de câmera em um passo"),
-                SummaryLine("Tray e janelas com visual de app do Windows"),
-                SummaryLine("Bloqueio e desbloqueio continuam iguais")
+                CardLine("Configuração rápida da câmera"),
+                CardLine("Integração com a Groq API"),
+                CardLine("Intervalo, aviso, emergência e meta diária")
             }
         }));
 
@@ -145,10 +156,10 @@ public partial class OnboardingWindow : Window
     private void BuildCameraSetup()
     {
         StepContent.Children.Add(Badge("PASSO 2 DE 5"));
-        StepContent.Children.Add(H1("Escolha a câmera"));
+        StepContent.Children.Add(StepTitle("Escolha a câmera"));
         StepContent.Children.Add(Body(
-            "No Windows não existe etapa extra de permissão dentro do app. "
-            + "Basta selecionar qual câmera deve ser usada na validação."));
+            "No Windows não há uma etapa separada de permissão dentro do app. "
+            + "Basta selecionar a câmera que será usada para validar a sua hidratação."));
 
         var cameras = CameraService.Shared.AvailableCameras();
         bool hasCamera = cameras.Count > 0;
@@ -158,12 +169,14 @@ public partial class OnboardingWindow : Window
             Background = hasCamera ? Brush("AccentDimBrush") : Brush("BackgroundBrush"),
             BorderBrush = hasCamera ? Brush("CardBorderBrush") : Brush("WarningBrush"),
             BorderThickness = new Thickness(1),
-            CornerRadius = new CornerRadius(10),
+            CornerRadius = new CornerRadius(12),
             Padding = new Thickness(12),
             Margin = new Thickness(0, 0, 0, 16),
             Child = new TextBlock
             {
-                Text = hasCamera ? "Câmera detectada e pronta para configuração." : "Nenhuma câmera detectada no momento.",
+                Text = hasCamera
+                    ? "Câmera detectada e pronta para uso."
+                    : "Nenhuma câmera foi detectada neste momento.",
                 Foreground = hasCamera ? Brush("TextPrimaryBrush") : Brush("WarningBrush"),
                 FontSize = 12
             }
@@ -173,23 +186,22 @@ public partial class OnboardingWindow : Window
         {
             Background = Brush("InputBrush"),
             BorderBrush = Brush("InputBorderBrush"),
-            BorderThickness = new Thickness(1),
-            Margin = new Thickness(0, 0, 0, 0)
+            BorderThickness = new Thickness(1)
         };
         listBox.Items.Add(new ListBoxItem
         {
-            Content = "Automático (câmera padrão do sistema)",
+            Content = "Automática (padrão do sistema)",
             Tag = string.Empty,
-            Padding = new Thickness(8)
+            Padding = new Thickness(10, 8, 10, 8)
         });
 
-        foreach (var cam in cameras)
+        foreach (var camera in cameras)
         {
             listBox.Items.Add(new ListBoxItem
             {
-                Content = cam.Name,
-                Tag = cam.MonikerString,
-                Padding = new Thickness(8)
+                Content = camera.Name,
+                Tag = camera.MonikerString,
+                Padding = new Thickness(10, 8, 10, 8)
             });
         }
 
@@ -224,7 +236,7 @@ public partial class OnboardingWindow : Window
     private void BuildApiKey()
     {
         StepContent.Children.Add(Badge("PASSO 3 DE 5"));
-        StepContent.Children.Add(H1("Conecte a Groq API"));
+        StepContent.Children.Add(StepTitle("Conecte a Groq API"));
         StepContent.Children.Add(Body(
             "A validação da foto usa o modelo configurado aqui. "
             + "A chave fica protegida no seu perfil do Windows."));
@@ -289,13 +301,13 @@ public partial class OnboardingWindow : Window
         }));
     }
 
-    private void BuildIntervals()
+    private void BuildMetrics()
     {
         StepContent.Children.Add(Badge("PASSO 4 DE 5"));
-        StepContent.Children.Add(H1("Defina as 4 métricas"));
+        StepContent.Children.Add(StepTitle("Defina as 4 métricas"));
         StepContent.Children.Add(Body(
-            "Esses valores controlam quando a tela bloqueia, quanto tempo antes avisa, "
-            + "quando libera a saída de emergência e qual é sua meta diária."));
+            "Esses ajustes controlam quando o WaterCue bloqueia, quanto tempo antes avisa, "
+            + "quando libera a saída de emergência e qual é a sua meta diária."));
 
         var settings = AppState.Shared.Settings;
         var panel = new StackPanel();
@@ -306,13 +318,13 @@ public partial class OnboardingWindow : Window
             15,
             240,
             15,
-            v =>
+            value =>
             {
-                settings.IntervalSeconds = (int)v * 60;
+                settings.IntervalSeconds = (int)value * 60;
                 settings.Save();
                 AppState.Shared.Settings = settings;
             },
-            v => FormatInterval((int)v)));
+            value => FormatInterval((int)value)));
 
         panel.Children.Add(MakeSlider(
             "Avisar com antecedência",
@@ -320,13 +332,13 @@ public partial class OnboardingWindow : Window
             1,
             10,
             1,
-            v =>
+            value =>
             {
-                settings.WarningSeconds = (int)v * 60;
+                settings.WarningSeconds = (int)value * 60;
                 settings.Save();
                 AppState.Shared.Settings = settings;
             },
-            v => $"{(int)v} min"));
+            value => $"{(int)value} min"));
 
         panel.Children.Add(MakeSlider(
             "Emergência após",
@@ -334,13 +346,13 @@ public partial class OnboardingWindow : Window
             10,
             300,
             10,
-            v =>
+            value =>
             {
-                settings.EmergencyDelaySeconds = (int)v;
+                settings.EmergencyDelaySeconds = (int)value;
                 settings.Save();
                 AppState.Shared.Settings = settings;
             },
-            v => FormatSeconds((int)v)));
+            value => FormatSeconds((int)value)));
 
         panel.Children.Add(MakeSlider(
             "Meta diária",
@@ -348,13 +360,13 @@ public partial class OnboardingWindow : Window
             4,
             16,
             1,
-            v =>
+            value =>
             {
-                settings.DailyGoal = (int)v;
+                settings.DailyGoal = (int)value;
                 settings.Save();
                 AppState.Shared.Settings = settings;
             },
-            v => $"{(int)v} copos"));
+            value => $"{(int)value} copos"));
 
         StepContent.Children.Add(InfoCard(panel));
         StepContent.Children.Add(PrimaryButton("Continuar", (_, _) => GoNext()));
@@ -363,10 +375,10 @@ public partial class OnboardingWindow : Window
     private void BuildDone()
     {
         StepContent.Children.Add(Badge("PASSO 5 DE 5"));
-        StepContent.Children.Add(H1("Tudo pronto"));
+        StepContent.Children.Add(StepTitle("Tudo pronto"));
         StepContent.Children.Add(Body(
-            $"O WaterCue vai travar o Windows a cada {FormatInterval(AppState.Shared.Settings.IntervalSeconds / 60)}. "
-            + "A gota continua na bandeja para abrir estatísticas e configurações."));
+            $"O WaterCue vai bloquear o Windows a cada {FormatInterval(AppState.Shared.Settings.IntervalSeconds / 60)}. "
+            + "A gota continua na bandeja para abrir estatísticas e preferências."));
 
         StepContent.Children.Add(PrimaryButton("Começar agora", (_, _) =>
         {
@@ -387,7 +399,7 @@ public partial class OnboardingWindow : Window
         Action<double> onChange,
         Func<double, string> format)
     {
-        var panel = new StackPanel { Margin = new Thickness(0, 0, 0, 16) };
+        var panel = new StackPanel { Margin = new Thickness(0, 0, 0, 18) };
         var row = new Grid();
         row.ColumnDefinitions.Add(new ColumnDefinition());
         row.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
@@ -431,20 +443,6 @@ public partial class OnboardingWindow : Window
         panel.Children.Add(slider);
         return panel;
     }
-
-    private TextBlock SummaryLine(string text) => new()
-    {
-        Text = text,
-        Foreground = Brush("TextPrimaryBrush"),
-        FontSize = 13,
-        Margin = new Thickness(0, 0, 0, 8)
-    };
-
-    private TextBlock FieldLabel(string text) => new()
-    {
-        Text = text,
-        Style = (Style)FindResource("FieldLabelTextStyle")
-    };
 
     private Brush Brush(string key) => (Brush)FindResource(key);
 

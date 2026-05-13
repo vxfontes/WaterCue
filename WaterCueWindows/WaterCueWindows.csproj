@@ -5,7 +5,7 @@
     <TargetFramework>net8.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <RootNamespace>WaterCueWindows</RootNamespace>
-    <AssemblyName>WaterCueWindows</AssemblyName>
+    <AssemblyName>WaterCue</AssemblyName>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>12</LangVersion>
