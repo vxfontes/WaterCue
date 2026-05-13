@@ -12,28 +12,19 @@ public partial class App : Application
     private TaskbarIcon? _trayIcon;
     private TrayIconManager? _trayManager;
 
-    private static readonly string LogPath = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "watercue_debug.log");
-
-    private static void Log(string msg)
-        => File.AppendAllText(LogPath, $"{DateTime.Now:HH:mm:ss.fff} {msg}\n");
+    private static readonly string _log = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "wc.log");
+    private static void L(string m) => File.AppendAllText(_log, $"{DateTime.Now:HH:mm:ss} {m}\n");
 
     protected override void OnStartup(StartupEventArgs e)
     {
-        AppDomain.CurrentDomain.UnhandledException += (_, ex)
-            => Log($"UNHANDLED: {ex.ExceptionObject}");
-        DispatcherUnhandledException += (_, ex)
-            => Log($"DISPATCHER: {ex.Exception}");
-
-        Log("OnStartup begin");
+        AppDomain.CurrentDomain.UnhandledException += (_, ex) => L($"CRASH: {ex.ExceptionObject}");
+        DispatcherUnhandledException += (_, ex) => L($"DISPATCH: {ex.Exception.Message}");
+        L("start");
         base.OnStartup(e);
         ShutdownMode = ShutdownMode.OnExplicitShutdown;
-        Log("ShutdownMode set");
 
         _trayIcon = (TaskbarIcon?)FindResource("TrayIcon");
-        Log($"TrayIcon: {(_trayIcon == null ? "null" : "ok")}");
 
-        Log("Injecting services");
         // Inject concrete services into AppState
         var state = AppState.Shared;
         state.TimerService     = TimerService.Shared;
@@ -115,24 +106,16 @@ public partial class App : Application
             }
         };
 
-        Log("Creating TrayIconManager");
-        // Tray icon manager (context menu + dynamic items)
+        L("tray manager");
         if (_trayIcon != null)
             _trayManager = new TrayIconManager(_trayIcon);
 
-        Log($"NeedsOnboarding check");
-        // Start or onboard
-        bool onboard = NeedsOnboarding(state);
-        Log($"NeedsOnboarding={onboard}");
-        if (onboard)
-        {
-            Log("Showing OnboardingWindow");
-            new OnboardingWindow().Show();
-            Log("OnboardingWindow shown");
-        }
+        L($"onboard={NeedsOnboarding(state)}");
+        if (NeedsOnboarding(state))
+        { L("show onboarding"); new OnboardingWindow().Show(); }
         else
             StartApp(state);
-        Log("OnStartup complete");
+        L("done");
     }
 
     private static bool NeedsOnboarding(AppState state)
