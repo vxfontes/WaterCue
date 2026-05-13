@@ -126,29 +126,29 @@ public partial class OnboardingWindow : Window
         StepContent.Children.Add(Badge("PASSO 1 DE 5"));
         StepContent.Children.Add(H1("Configure o WaterCue para o seu Windows"));
         StepContent.Children.Add(Body(
-            "Este assistente prepara camera, IA e intervalos com uma interface mais desktop. "
-            + "As notificacoes ja funcionam nativamente no Windows."));
+            "Este assistente prepara câmera, IA e intervalos com uma interface mais desktop. "
+            + "As notificações já funcionam nativamente no Windows."));
 
         StepContent.Children.Add(InfoCard(new StackPanel
         {
             Children =
             {
-                SummaryLine("Fluxo de camera em um passo"),
+                SummaryLine("Fluxo de câmera em um passo"),
                 SummaryLine("Tray e janelas com visual de app do Windows"),
                 SummaryLine("Bloqueio e desbloqueio continuam iguais")
             }
         }));
 
-        StepContent.Children.Add(PrimaryButton("Comecar", (_, _) => GoNext()));
+        StepContent.Children.Add(PrimaryButton("Começar", (_, _) => GoNext()));
     }
 
     private void BuildCameraSetup()
     {
         StepContent.Children.Add(Badge("PASSO 2 DE 5"));
-        StepContent.Children.Add(H1("Escolha a camera"));
+        StepContent.Children.Add(H1("Escolha a câmera"));
         StepContent.Children.Add(Body(
-            "No Windows nao existe etapa extra de permissao dentro do app. "
-            + "Basta selecionar qual camera deve ser usada na validacao."));
+            "No Windows não existe etapa extra de permissão dentro do app. "
+            + "Basta selecionar qual câmera deve ser usada na validação."));
 
         var cameras = CameraService.Shared.AvailableCameras();
         bool hasCamera = cameras.Count > 0;
@@ -163,7 +163,7 @@ public partial class OnboardingWindow : Window
             Margin = new Thickness(0, 0, 0, 16),
             Child = new TextBlock
             {
-                Text = hasCamera ? "Camera detectada e pronta para configuracao." : "Nenhuma camera detectada no momento.",
+                Text = hasCamera ? "Câmera detectada e pronta para configuração." : "Nenhuma câmera detectada no momento.",
                 Foreground = hasCamera ? Brush("TextPrimaryBrush") : Brush("WarningBrush"),
                 FontSize = 12
             }
@@ -178,7 +178,7 @@ public partial class OnboardingWindow : Window
         };
         listBox.Items.Add(new ListBoxItem
         {
-            Content = "Automatico (camera padrao do sistema)",
+            Content = "Automático (câmera padrão do sistema)",
             Tag = string.Empty,
             Padding = new Thickness(8)
         });
@@ -226,7 +226,7 @@ public partial class OnboardingWindow : Window
         StepContent.Children.Add(Badge("PASSO 3 DE 5"));
         StepContent.Children.Add(H1("Conecte a Groq API"));
         StepContent.Children.Add(Body(
-            "A validacao da foto usa o modelo configurado aqui. "
+            "A validação da foto usa o modelo configurado aqui. "
             + "A chave fica protegida no seu perfil do Windows."));
 
         var keyBox = new PasswordBox
@@ -245,7 +245,7 @@ public partial class OnboardingWindow : Window
 
         var link = new TextBlock
         {
-            Text = "Criar chave gratis em console.groq.com",
+            Text = "Criar chave grátis em console.groq.com",
             Foreground = Brush("AccentBrush"),
             FontSize = 12,
             Cursor = System.Windows.Input.Cursors.Hand,
@@ -292,9 +292,10 @@ public partial class OnboardingWindow : Window
     private void BuildIntervals()
     {
         StepContent.Children.Add(Badge("PASSO 4 DE 5"));
-        StepContent.Children.Add(H1("Defina os intervalos"));
+        StepContent.Children.Add(H1("Defina as 4 métricas"));
         StepContent.Children.Add(Body(
-            "Esses valores controlam quando a tela bloqueia e quanto tempo demora para liberar a saida de emergencia."));
+            "Esses valores controlam quando a tela bloqueia, quanto tempo antes avisa, "
+            + "quando libera a saída de emergência e qual é sua meta diária."));
 
         var settings = AppState.Shared.Settings;
         var panel = new StackPanel();
@@ -314,7 +315,21 @@ public partial class OnboardingWindow : Window
             v => FormatInterval((int)v)));
 
         panel.Children.Add(MakeSlider(
-            "Emergencia apos",
+            "Avisar com antecedência",
+            settings.WarningSeconds / 60.0,
+            1,
+            10,
+            1,
+            v =>
+            {
+                settings.WarningSeconds = (int)v * 60;
+                settings.Save();
+                AppState.Shared.Settings = settings;
+            },
+            v => $"{(int)v} min"));
+
+        panel.Children.Add(MakeSlider(
+            "Emergência após",
             settings.EmergencyDelaySeconds,
             10,
             300,
@@ -327,6 +342,20 @@ public partial class OnboardingWindow : Window
             },
             v => FormatSeconds((int)v)));
 
+        panel.Children.Add(MakeSlider(
+            "Meta diária",
+            settings.DailyGoal,
+            4,
+            16,
+            1,
+            v =>
+            {
+                settings.DailyGoal = (int)v;
+                settings.Save();
+                AppState.Shared.Settings = settings;
+            },
+            v => $"{(int)v} copos"));
+
         StepContent.Children.Add(InfoCard(panel));
         StepContent.Children.Add(PrimaryButton("Continuar", (_, _) => GoNext()));
     }
@@ -337,9 +366,9 @@ public partial class OnboardingWindow : Window
         StepContent.Children.Add(H1("Tudo pronto"));
         StepContent.Children.Add(Body(
             $"O WaterCue vai travar o Windows a cada {FormatInterval(AppState.Shared.Settings.IntervalSeconds / 60)}. "
-            + "A gota continua na bandeja para abrir estatisticas e configuracoes."));
+            + "A gota continua na bandeja para abrir estatísticas e configurações."));
 
-        StepContent.Children.Add(PrimaryButton("Comecar agora", (_, _) =>
+        StepContent.Children.Add(PrimaryButton("Começar agora", (_, _) =>
         {
             App.MarkOnboardingComplete();
             AppState.Shared.LockState = LockState.Idle;

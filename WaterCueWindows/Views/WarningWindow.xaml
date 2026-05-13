@@ -29,7 +29,7 @@
                     <TextBlock Text="WaterCue"
                                Style="{StaticResource SectionCaptionTextStyle}"
                                Foreground="{StaticResource AccentBrush}" />
-                    <TextBlock Text="Hora de beber agua"
+                    <TextBlock Text="Hora de beber água"
                                Style="{StaticResource WindowTitleTextStyle}"
                                FontSize="23"
                                Margin="0,6,0,0" />
@@ -47,7 +47,7 @@
                         CornerRadius="12"
                         Padding="14"
                         Margin="0,0,0,16">
-                    <TextBlock Text="Beba agora para evitar o bloqueio. Se nao der, voce pode adiar por cinco minutos."
+                    <TextBlock Text="Beba agora para evitar o bloqueio. Se não der, você pode adiar por cinco minutos."
                                Style="{StaticResource BodyTextStyle}"
                                TextWrapping="Wrap" />
                 </Border>

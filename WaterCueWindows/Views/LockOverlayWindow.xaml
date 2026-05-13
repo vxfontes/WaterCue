@@ -30,7 +30,7 @@
                                FontSize="12"
                                FontWeight="SemiBold"
                                Foreground="{StaticResource AccentBrightBrush}" />
-                    <TextBlock Text="Bloqueio por hidratacao"
+                    <TextBlock Text="Bloqueio por hidratação"
                                FontFamily="Segoe UI Variable Display, Segoe UI Variable, Segoe UI"
                                FontSize="30"
                                FontWeight="SemiBold"
@@ -84,7 +84,7 @@
                                                HorizontalAlignment="Center"
                                                Margin="0,0,0,10" />
                                     <TextBlock x:Name="CameraStatusLabel"
-                                               Text="Iniciando camera..."
+                                               Text="Iniciando câmera..."
                                                FontSize="14"
                                                Foreground="{StaticResource OverlayMutedBrush}"
                                                HorizontalAlignment="Center"
@@ -116,7 +116,7 @@
                             Width="240"
                             Cursor="Hand">
                         <TextBlock x:Name="CaptureButtonLabel"
-                                   Text="Aguardando camera..."
+                                   Text="Aguardando câmera..."
                                    FontSize="15"
                                    FontWeight="SemiBold"
                                    Foreground="White" />
@@ -195,7 +195,7 @@
                         Click="EmergencyButton_Click"
                         HorizontalAlignment="Center"
                         Cursor="Hand"
-                        Content="Desbloquear em emergencia" />
+                        Content="Desbloquear em emergência" />
             </StackPanel>
         </Grid>
 
@@ -216,7 +216,7 @@
                                FontWeight="SemiBold"
                                Foreground="{StaticResource OverlayTextBrush}"
                                HorizontalAlignment="Center" />
-                    <TextBlock Text="A validacao da foto acontece apenas na tela principal."
+                    <TextBlock Text="A validação da foto acontece apenas na tela principal."
                                FontSize="14"
                                Foreground="{StaticResource OverlayMutedBrush}"
                                HorizontalAlignment="Center"

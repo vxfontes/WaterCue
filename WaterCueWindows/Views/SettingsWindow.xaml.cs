@@ -27,10 +27,10 @@ public partial class SettingsWindow : Window
     private void BuildSections()
     {
         SettingsPanel.Children.Add(Section("Intervalo", BuildIntervalSection()));
-        SettingsPanel.Children.Add(Section("Camera", BuildCameraSection()));
+        SettingsPanel.Children.Add(Section("Câmera", BuildCameraSection()));
         SettingsPanel.Children.Add(Section("Groq API", BuildApiSection()));
         SettingsPanel.Children.Add(Section("Sistema", BuildSystemSection()));
-        SettingsPanel.Children.Add(Section("Avancado", BuildAdvancedSection()));
+        SettingsPanel.Children.Add(Section("Avançado", BuildAdvancedSection()));
     }
 
     private Border Section(string title, UIElement content)
@@ -75,19 +75,19 @@ public partial class SettingsWindow : Window
         panel.Children.Add(_warnToggle);
 
         panel.Children.Add(MakeLabeledSlider(
-            "Avisar com antecedencia",
+            "Avisar com antecedência",
             1, 10, 1, _draft.WarningSeconds / 60.0,
             val => $"{(int)val} min",
             val => _draft.WarningSeconds = (int)val * 60));
 
         panel.Children.Add(MakeLabeledSlider(
-            "Liberar emergencia apos",
+            "Liberar emergência após",
             10, 300, 10, _draft.EmergencyDelaySeconds,
             FormatSeconds,
             val => _draft.EmergencyDelaySeconds = (int)val));
 
         panel.Children.Add(MakeLabeledSlider(
-            "Meta diaria",
+            "Meta diária",
             4, 16, 1, _draft.DailyGoal,
             val => $"{(int)val} copos",
             val => _draft.DailyGoal = (int)val));
@@ -99,14 +99,14 @@ public partial class SettingsWindow : Window
     {
         var panel = new StackPanel();
 
-        panel.Children.Add(FieldLabel("Camera usada para a validacao"));
+        panel.Children.Add(FieldLabel("Câmera usada para a validação"));
 
         _cameraCombo = new ComboBox
         {
             Style = (Style)FindResource("InputComboBoxStyle")
         };
 
-        _cameraCombo.Items.Add(new ComboBoxItem { Content = "Automatico", Tag = string.Empty });
+        _cameraCombo.Items.Add(new ComboBoxItem { Content = "Automático", Tag = string.Empty });
         foreach (var cam in CameraService.Shared.AvailableCameras())
         {
             _cameraCombo.Items.Add(new ComboBoxItem { Content = cam.Name, Tag = cam.MonikerString });
@@ -133,7 +133,7 @@ public partial class SettingsWindow : Window
         panel.Children.Add(_cameraCombo);
         panel.Children.Add(new TextBlock
         {
-            Text = "No Windows nao precisa de permissao extra dentro do app.",
+            Text = "No Windows não precisa de permissão extra dentro do app.",
             Style = (Style)FindResource("BodyTextStyle"),
             Margin = new Thickness(0, 10, 0, 0)
         });
