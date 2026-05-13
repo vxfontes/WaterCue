@@ -1,7 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using WaterCueWindows;
 using WaterCueWindows.Services;
 
 namespace WaterCueWindows.Views;
@@ -9,7 +8,7 @@ namespace WaterCueWindows.Views;
 public partial class OnboardingWindow : Window
 {
     private int _step;
-    private const int TotalSteps = 7;
+    private const int TotalSteps = 5;
 
     public OnboardingWindow()
     {
@@ -17,10 +16,11 @@ public partial class OnboardingWindow : Window
         RenderStep(0);
     }
 
-    // ─────────────────────────── Navigation ────────────────────────────
-
-    private void GoNext() { _step = Math.Min(_step + 1, TotalSteps - 1); RenderStep(_step); }
-    private void GoBack() { _step = Math.Max(_step - 1, 0); RenderStep(_step); }
+    private void GoNext()
+    {
+        _step = Math.Min(_step + 1, TotalSteps - 1);
+        RenderStep(_step);
+    }
 
     private void RenderStep(int step)
     {
@@ -29,13 +29,21 @@ public partial class OnboardingWindow : Window
 
         switch (step)
         {
-            case 0: BuildWelcome(); break;
-            case 1: BuildCameraPermission(); break;
-            case 2: BuildCameraSelector(); break;
-            case 3: BuildNotifications(); break;
-            case 4: BuildApiKey(); break;
-            case 5: BuildIntervals(); break;
-            default: BuildDone(); break;
+            case 0:
+                BuildWelcome();
+                break;
+            case 1:
+                BuildCameraSetup();
+                break;
+            case 2:
+                BuildApiKey();
+                break;
+            case 3:
+                BuildIntervals();
+                break;
+            default:
+                BuildDone();
+                break;
         }
     }
 
@@ -58,13 +66,12 @@ public partial class OnboardingWindow : Window
         }
     }
 
-    // ─────────────────────────── UI Helpers ────────────────────────────
-
     private static TextBlock H1(string text) => new()
     {
         Text = text,
         FontFamily = new FontFamily("Segoe UI Variable, Segoe UI"),
-        FontSize = 24, FontWeight = FontWeights.Bold,
+        FontSize = 24,
+        FontWeight = FontWeights.Bold,
         Foreground = Brushes.White,
         HorizontalAlignment = HorizontalAlignment.Center,
         TextWrapping = TextWrapping.Wrap,
@@ -84,37 +91,32 @@ public partial class OnboardingWindow : Window
         Margin = new Thickness(0, 0, 0, 20)
     };
 
-    private static TextBlock Icon(string emoji, double size = 48) => new()
+    private static TextBlock EmojiIcon(string emoji, double size = 48) => new()
     {
-        Text = emoji, FontSize = size,
+        Text = emoji,
+        FontSize = size,
         HorizontalAlignment = HorizontalAlignment.Center,
         Margin = new Thickness(0, 0, 0, 12)
     };
 
     private Button PrimaryButton(string label, RoutedEventHandler handler)
     {
-        var btn = new Button { Height = 42, Cursor = System.Windows.Input.Cursors.Hand, Margin = new Thickness(0, 4, 0, 4) };
-        btn.Template = BuildPrimaryTemplate();
-        btn.Content = new TextBlock
+        var btn = new Button
         {
-            Text = label, Foreground = Brushes.White,
-            FontSize = 14, FontWeight = FontWeights.SemiBold,
-            FontFamily = new FontFamily("Segoe UI Variable, Segoe UI")
+            Height = 42,
+            Cursor = System.Windows.Input.Cursors.Hand,
+            Margin = new Thickness(0, 4, 0, 4),
+            Template = BuildPrimaryTemplate(),
+            Content = new TextBlock
+            {
+                Text = label,
+                Foreground = Brushes.White,
+                FontSize = 14,
+                FontWeight = FontWeights.SemiBold,
+                FontFamily = new FontFamily("Segoe UI Variable, Segoe UI")
+            }
         };
-        btn.Click += handler;
-        return btn;
-    }
 
-    private Button SecondaryButton(string label, RoutedEventHandler handler)
-    {
-        var btn = new Button { Height = 36, Cursor = System.Windows.Input.Cursors.Hand, Margin = new Thickness(0, 0, 0, 4) };
-        btn.Template = BuildSecondaryTemplate();
-        btn.Content = new TextBlock
-        {
-            Text = label, FontSize = 13,
-            Foreground = new SolidColorBrush(Color.FromRgb(0x8A, 0x9B, 0xBF)),
-            FontFamily = new FontFamily("Segoe UI Variable, Segoe UI")
-        };
         btn.Click += handler;
         return btn;
     }
@@ -124,30 +126,15 @@ public partial class OnboardingWindow : Window
         var tpl = new ControlTemplate(typeof(Button));
         var factory = new FrameworkElementFactory(typeof(Border));
         factory.SetValue(Border.CornerRadiusProperty, new CornerRadius(8));
-        var brush = new LinearGradientBrush(
-            Color.FromRgb(0x27, 0xB7, 0xF5),
-            Color.FromRgb(0x00, 0x77, 0xC8), 0);
-        factory.SetValue(Border.BackgroundProperty, brush);
-        var cp = new FrameworkElementFactory(typeof(ContentPresenter));
-        cp.SetValue(ContentPresenter.HorizontalAlignmentProperty, HorizontalAlignment.Center);
-        cp.SetValue(ContentPresenter.VerticalAlignmentProperty, VerticalAlignment.Center);
-        factory.AppendChild(cp);
-        tpl.VisualTree = factory;
-        return tpl;
-    }
+        factory.SetValue(
+            Border.BackgroundProperty,
+            new LinearGradientBrush(Color.FromRgb(0x27, 0xB7, 0xF5), Color.FromRgb(0x00, 0x77, 0xC8), 0));
 
-    private static ControlTemplate BuildSecondaryTemplate()
-    {
-        var tpl = new ControlTemplate(typeof(Button));
-        var factory = new FrameworkElementFactory(typeof(Border));
-        factory.SetValue(Border.CornerRadiusProperty, new CornerRadius(8));
-        factory.SetValue(Border.BackgroundProperty, Brushes.Transparent);
-        factory.SetValue(Border.BorderBrushProperty, new SolidColorBrush(Color.FromRgb(0x1A, 0x29, 0x40)));
-        factory.SetValue(Border.BorderThicknessProperty, new Thickness(1));
         var cp = new FrameworkElementFactory(typeof(ContentPresenter));
         cp.SetValue(ContentPresenter.HorizontalAlignmentProperty, HorizontalAlignment.Center);
         cp.SetValue(ContentPresenter.VerticalAlignmentProperty, VerticalAlignment.Center);
         factory.AppendChild(cp);
+
         tpl.VisualTree = factory;
         return tpl;
     }
@@ -164,53 +151,37 @@ public partial class OnboardingWindow : Window
         };
     }
 
-    // ─────────────────────────── Steps ────────────────────────────────
-
     private void BuildWelcome()
     {
-        StepContent.Children.Add(Icon("💧", 64));
-        StepContent.Children.Add(H1("Bem-vindo ao WaterCue!"));
+        StepContent.Children.Add(EmojiIcon("\U0001F4A7", 64));
+        StepContent.Children.Add(H1("Bem-vindo ao WaterCue"));
         StepContent.Children.Add(Body(
-            "Vou travar seu Windows periodicamente até você beber água\ne comprovar com uma foto. Chega de \"vou agora\" que nunca vai."));
-        StepContent.Children.Add(PrimaryButton("Começar →", (_, _) => GoNext()));
+            "Vou travar seu Windows periodicamente ate voce beber agua e comprovar com uma foto. "
+            + "No Windows, notificacoes funcionam direto e a configuracao da camera fica em um passo so."));
+        StepContent.Children.Add(PrimaryButton("Comecar", (_, _) => GoNext()));
     }
 
-    private void BuildCameraPermission()
+    private void BuildCameraSetup()
     {
-        StepContent.Children.Add(Icon("📷", 48));
-        StepContent.Children.Add(H1("Permissão de câmera"));
+        StepContent.Children.Add(EmojiIcon("\U0001F4F7", 48));
+        StepContent.Children.Add(H1("Configurar camera"));
         StepContent.Children.Add(Body(
-            "Precisamos da câmera para validar a foto do seu copo de água\nantes de desbloquear o Windows."));
-
-        bool available = CameraService.Shared.AvailableCameras().Count > 0;
-
-        if (available)
-        {
-            var status = new TextBlock
-            {
-                Text = "✅  Câmera disponível",
-                FontSize = 13,
-                Foreground = new SolidColorBrush(Color.FromRgb(0x30, 0xC0, 0x60)),
-                HorizontalAlignment = HorizontalAlignment.Center,
-                Margin = new Thickness(0, 0, 0, 12)
-            };
-            StepContent.Children.Add(status);
-            StepContent.Children.Add(PrimaryButton("Continuar →", (_, _) => GoNext()));
-        }
-        else
-        {
-            StepContent.Children.Add(Body("Câmera não detectada. Conecte uma câmera e continue."));
-            StepContent.Children.Add(PrimaryButton("Continuar mesmo assim →", (_, _) => GoNext()));
-        }
-    }
-
-    private void BuildCameraSelector()
-    {
-        StepContent.Children.Add(Icon("🎥", 48));
-        StepContent.Children.Add(H1("Qual câmera usar?"));
-        StepContent.Children.Add(Body("Escolha a câmera que vai usar para tirar a foto de hidratação."));
+            "Aqui nao tem pedido extra de permissao. Escolha a camera que o app vai usar "
+            + "para validar sua hidratacao."));
 
         var cameras = CameraService.Shared.AvailableCameras();
+        var hasCamera = cameras.Count > 0;
+
+        StepContent.Children.Add(new TextBlock
+        {
+            Text = hasCamera ? "Camera detectada" : "Nenhuma camera detectada agora",
+            FontSize = 13,
+            Foreground = hasCamera
+                ? new SolidColorBrush(Color.FromRgb(0x30, 0xC0, 0x60))
+                : new SolidColorBrush(Color.FromRgb(0xE8, 0xA0, 0x20)),
+            HorizontalAlignment = HorizontalAlignment.Center,
+            Margin = new Thickness(0, 0, 0, 12)
+        });
 
         var listBox = new ListBox
         {
@@ -219,83 +190,81 @@ public partial class OnboardingWindow : Window
             Margin = new Thickness(0, 0, 0, 16)
         };
 
-        var autoItem = new ListBoxItem
+        listBox.Items.Add(new ListBoxItem
         {
             Content = new StackPanel
             {
                 Children =
                 {
-                    new TextBlock { Text = "Automático", FontSize = 13, Foreground = Brushes.White, FontWeight = FontWeights.SemiBold },
-                    new TextBlock { Text = "Usa a câmera padrão do sistema", FontSize = 11, Foreground = new SolidColorBrush(Color.FromRgb(0x8A, 0x9B, 0xBF)) }
+                    new TextBlock
+                    {
+                        Text = "Automatico",
+                        FontSize = 13,
+                        Foreground = Brushes.White,
+                        FontWeight = FontWeights.SemiBold
+                    },
+                    new TextBlock
+                    {
+                        Text = "Usa a camera padrao do sistema",
+                        FontSize = 11,
+                        Foreground = new SolidColorBrush(Color.FromRgb(0x8A, 0x9B, 0xBF))
+                    }
                 }
             },
             Tag = string.Empty,
             Padding = new Thickness(8, 6, 8, 6)
-        };
-        listBox.Items.Add(autoItem);
+        });
 
         foreach (var cam in cameras)
         {
             listBox.Items.Add(new ListBoxItem
             {
-                Content = new TextBlock { Text = cam.Name, FontSize = 13, Foreground = Brushes.White },
+                Content = new TextBlock
+                {
+                    Text = cam.Name,
+                    FontSize = 13,
+                    Foreground = Brushes.White
+                },
                 Tag = cam.MonikerString,
                 Padding = new Thickness(8, 6, 8, 6)
             });
         }
 
         listBox.SelectedIndex = 0;
-        string currentId = AppState.Shared.Settings.CameraDeviceId;
+        var currentId = AppState.Shared.Settings.CameraDeviceId;
         for (int i = 0; i < listBox.Items.Count; i++)
         {
             if (((ListBoxItem)listBox.Items[i]).Tag is string tag && tag == currentId)
-            { listBox.SelectedIndex = i; break; }
+            {
+                listBox.SelectedIndex = i;
+                break;
+            }
         }
 
         listBox.SelectionChanged += (_, _) =>
         {
-            if (listBox.SelectedItem is ListBoxItem item)
+            if (listBox.SelectedItem is not ListBoxItem item)
             {
-                var s = AppState.Shared.Settings;
-                s.CameraDeviceId = item.Tag as string ?? string.Empty;
-                s.Save();
-                AppState.Shared.Settings = s;
+                return;
             }
+
+            var settings = AppState.Shared.Settings;
+            settings.CameraDeviceId = item.Tag as string ?? string.Empty;
+            settings.Save();
+            AppState.Shared.Settings = settings;
         };
 
         StepContent.Children.Add(InfoCard(listBox));
-        StepContent.Children.Add(PrimaryButton("Continuar →", (_, _) => GoNext()));
-    }
-
-    private void BuildNotifications()
-    {
-        StepContent.Children.Add(Icon("🔔", 48));
-        StepContent.Children.Add(H1("Notificações"));
-        StepContent.Children.Add(Body(
-            "Vou te avisar alguns minutos antes de travar.\nAssim você pode beber antes e o Windows nem chega a travar."));
-
-        var notifService = AppState.Shared.NotificationService;
-        bool hasNotif = notifService != null;
-
-        if (hasNotif)
-        {
-            StepContent.Children.Add(Body("✅  Notificações configuradas via Windows Toast."));
-        }
-        else
-        {
-            StepContent.Children.Add(Body("Notificações serão ativadas automaticamente."));
-        }
-
-        StepContent.Children.Add(PrimaryButton("Continuar →", (_, _) => GoNext()));
-        StepContent.Children.Add(SecondaryButton("Pular (sem aviso prévio)", (_, _) => GoNext()));
+        StepContent.Children.Add(PrimaryButton(hasCamera ? "Continuar" : "Continuar mesmo assim", (_, _) => GoNext()));
     }
 
     private void BuildApiKey()
     {
-        StepContent.Children.Add(Icon("🤖", 48));
-        StepContent.Children.Add(H1("Chave Groq (IA)"));
+        StepContent.Children.Add(EmojiIcon("\U0001F916", 48));
+        StepContent.Children.Add(H1("Chave Groq"));
         StepContent.Children.Add(Body(
-            "A IA do Groq analisa sua foto gratuitamente.\nCole a chave abaixo — ela fica guardada no Windows Credential Manager."));
+            "A IA do Groq analisa sua foto. Cole a chave abaixo. "
+            + "Ela fica guardada com protecao do proprio Windows no seu perfil local."));
 
         var keyBox = new PasswordBox
         {
@@ -320,11 +289,16 @@ public partial class OnboardingWindow : Window
         var saveBtn = PrimaryButton("Salvar e continuar", (_, _) =>
         {
             var key = keyBox.Password.Trim();
-            if (key.Length < 20) { errorLabel.Text = "Chave muito curta. Formato: gsk_..."; errorLabel.Visibility = Visibility.Visible; return; }
+            if (key.Length < 20)
+            {
+                errorLabel.Text = "Chave muito curta. Formato esperado: gsk_...";
+                errorLabel.Visibility = Visibility.Visible;
+                return;
+            }
 
             try
             {
-                SaveApiKey(key);
+                SettingsService.Shared.SaveApiKey(key);
                 errorLabel.Visibility = Visibility.Collapsed;
                 GoNext();
             }
@@ -340,10 +314,12 @@ public partial class OnboardingWindow : Window
             FontSize = 11,
             Foreground = new SolidColorBrush(Color.FromRgb(0x27, 0xB7, 0xF5)),
             Cursor = System.Windows.Input.Cursors.Hand,
-            Text = "→ Criar chave grátis em console.groq.com",
+            Text = "Criar chave gratis em console.groq.com",
             Margin = new Thickness(0, 4, 0, 12)
         };
-        linkLabel.MouseDown += (_, _) => System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("https://console.groq.com/keys") { UseShellExecute = true });
+        linkLabel.MouseDown += (_, _) =>
+            System.Diagnostics.Process.Start(
+                new System.Diagnostics.ProcessStartInfo("https://console.groq.com/keys") { UseShellExecute = true });
 
         StepContent.Children.Add(keyBox);
         StepContent.Children.Add(errorLabel);
@@ -353,83 +329,114 @@ public partial class OnboardingWindow : Window
 
     private void BuildIntervals()
     {
-        StepContent.Children.Add(Icon("⏱", 48));
+        StepContent.Children.Add(EmojiIcon("\u23F1", 48));
         StepContent.Children.Add(H1("Configurar intervalos"));
-        StepContent.Children.Add(Body("Ajuste quando o Windows trava e quanto tempo antes o botão de emergência aparece."));
+        StepContent.Children.Add(Body("Ajuste quando o Windows trava e quanto tempo depois o botao de emergencia aparece."));
 
-        var s = AppState.Shared.Settings;
-        var panel = new StackPanel { Margin = new Thickness(0, 0, 0, 0) };
+        var settings = AppState.Shared.Settings;
+        var panel = new StackPanel();
 
-        // Interval slider
         var intervalLabel = new TextBlock
         {
-            Text = FormatInterval(s.IntervalSeconds / 60),
-            FontSize = 13, Foreground = Brushes.White, FontWeight = FontWeights.SemiBold
+            Text = FormatInterval(settings.IntervalSeconds / 60),
+            FontSize = 13,
+            Foreground = Brushes.White,
+            FontWeight = FontWeights.SemiBold
         };
+
         var intervalRow = new Grid();
         intervalRow.ColumnDefinitions.Add(new ColumnDefinition());
         intervalRow.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-        var intervalTitle = new TextBlock { Text = "🔒  Travar a cada", FontSize = 13, Foreground = new SolidColorBrush(Color.FromRgb(0x8A, 0x9B, 0xBF)) };
-        Grid.SetColumn(intervalTitle, 0); Grid.SetColumn(intervalLabel, 1);
-        intervalRow.Children.Add(intervalTitle); intervalRow.Children.Add(intervalLabel);
+
+        var intervalTitle = new TextBlock
+        {
+            Text = "Travar a cada",
+            FontSize = 13,
+            Foreground = new SolidColorBrush(Color.FromRgb(0x8A, 0x9B, 0xBF))
+        };
+
+        Grid.SetColumn(intervalTitle, 0);
+        Grid.SetColumn(intervalLabel, 1);
+        intervalRow.Children.Add(intervalTitle);
+        intervalRow.Children.Add(intervalLabel);
         panel.Children.Add(intervalRow);
 
         var intervalSlider = new Slider
         {
-            Minimum = 15, Maximum = 240, TickFrequency = 15, IsSnapToTickEnabled = true,
-            Value = s.IntervalSeconds / 60.0, Margin = new Thickness(0, 4, 0, 16)
+            Minimum = 15,
+            Maximum = 240,
+            TickFrequency = 15,
+            IsSnapToTickEnabled = true,
+            Value = settings.IntervalSeconds / 60.0,
+            Margin = new Thickness(0, 4, 0, 16)
         };
         intervalSlider.ValueChanged += (_, e) =>
         {
-            var settings = AppState.Shared.Settings;
-            settings.IntervalSeconds = (int)e.NewValue * 60;
-            settings.Save();
-            AppState.Shared.Settings = settings;
+            var currentSettings = AppState.Shared.Settings;
+            currentSettings.IntervalSeconds = (int)e.NewValue * 60;
+            currentSettings.Save();
+            AppState.Shared.Settings = currentSettings;
             intervalLabel.Text = FormatInterval((int)e.NewValue);
         };
         panel.Children.Add(intervalSlider);
 
-        // Emergency delay slider
-        var emergLabel = new TextBlock
+        var emergencyLabel = new TextBlock
         {
-            Text = FormatSeconds(s.EmergencyDelaySeconds),
-            FontSize = 13, Foreground = Brushes.White, FontWeight = FontWeights.SemiBold
+            Text = FormatSeconds(settings.EmergencyDelaySeconds),
+            FontSize = 13,
+            Foreground = Brushes.White,
+            FontWeight = FontWeights.SemiBold
         };
-        var emergRow = new Grid();
-        emergRow.ColumnDefinitions.Add(new ColumnDefinition());
-        emergRow.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-        var emergTitle = new TextBlock { Text = "⚠  Emergência após", FontSize = 13, Foreground = new SolidColorBrush(Color.FromRgb(0xE8, 0xA0, 0x20)) };
-        Grid.SetColumn(emergTitle, 0); Grid.SetColumn(emergLabel, 1);
-        emergRow.Children.Add(emergTitle); emergRow.Children.Add(emergLabel);
-        panel.Children.Add(emergRow);
 
-        var emergSlider = new Slider
+        var emergencyRow = new Grid();
+        emergencyRow.ColumnDefinitions.Add(new ColumnDefinition());
+        emergencyRow.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+
+        var emergencyTitle = new TextBlock
         {
-            Minimum = 10, Maximum = 300, TickFrequency = 10, IsSnapToTickEnabled = true,
-            Value = s.EmergencyDelaySeconds, Margin = new Thickness(0, 4, 0, 4)
+            Text = "Emergencia apos",
+            FontSize = 13,
+            Foreground = new SolidColorBrush(Color.FromRgb(0xE8, 0xA0, 0x20))
         };
-        emergSlider.ValueChanged += (_, e) =>
+
+        Grid.SetColumn(emergencyTitle, 0);
+        Grid.SetColumn(emergencyLabel, 1);
+        emergencyRow.Children.Add(emergencyTitle);
+        emergencyRow.Children.Add(emergencyLabel);
+        panel.Children.Add(emergencyRow);
+
+        var emergencySlider = new Slider
         {
-            var settings = AppState.Shared.Settings;
-            settings.EmergencyDelaySeconds = (int)e.NewValue;
-            settings.Save();
-            AppState.Shared.Settings = settings;
-            emergLabel.Text = FormatSeconds((int)e.NewValue);
+            Minimum = 10,
+            Maximum = 300,
+            TickFrequency = 10,
+            IsSnapToTickEnabled = true,
+            Value = settings.EmergencyDelaySeconds,
+            Margin = new Thickness(0, 4, 0, 4)
         };
-        panel.Children.Add(emergSlider);
+        emergencySlider.ValueChanged += (_, e) =>
+        {
+            var currentSettings = AppState.Shared.Settings;
+            currentSettings.EmergencyDelaySeconds = (int)e.NewValue;
+            currentSettings.Save();
+            AppState.Shared.Settings = currentSettings;
+            emergencyLabel.Text = FormatSeconds((int)e.NewValue);
+        };
+        panel.Children.Add(emergencySlider);
 
         StepContent.Children.Add(InfoCard(panel));
-        StepContent.Children.Add(PrimaryButton("Continuar →", (_, _) => GoNext()));
+        StepContent.Children.Add(PrimaryButton("Continuar", (_, _) => GoNext()));
     }
 
     private void BuildDone()
     {
-        StepContent.Children.Add(Icon("✅", 64));
-        StepContent.Children.Add(H1("Tudo pronto!"));
+        StepContent.Children.Add(EmojiIcon("\u2705", 64));
+        StepContent.Children.Add(H1("Tudo pronto"));
         StepContent.Children.Add(Body(
-            $"WaterCue vai travar seu Windows a cada {FormatInterval(AppState.Shared.Settings.IntervalSeconds / 60)}.\nFique de olho na gotinha 💧 na bandeja do sistema."));
+            $"O WaterCue vai travar seu Windows a cada {FormatInterval(AppState.Shared.Settings.IntervalSeconds / 60)}. "
+            + "Fique de olho no icone da bandeja."));
 
-        StepContent.Children.Add(PrimaryButton("Começar agora", (_, _) =>
+        StepContent.Children.Add(PrimaryButton("Comecar agora", (_, _) =>
         {
             App.MarkOnboardingComplete();
             AppState.Shared.LockState = LockState.Idle;
@@ -439,22 +446,27 @@ public partial class OnboardingWindow : Window
         }));
     }
 
-    // ─────────────────────────── Helpers ────────────────────────────────
-
-    private static void SaveApiKey(string key)
-        => SettingsService.Shared.SaveApiKey(key);
-
     private static string FormatInterval(int minutes)
     {
-        if (minutes < 60) return $"{minutes} min";
-        int h = minutes / 60, m = minutes % 60;
-        return m == 0 ? $"{h}h" : $"{h}h{m}min";
+        if (minutes < 60)
+        {
+            return $"{minutes} min";
+        }
+
+        int hours = minutes / 60;
+        int remainderMinutes = minutes % 60;
+        return remainderMinutes == 0 ? $"{hours}h" : $"{hours}h{remainderMinutes}min";
     }
 
     private static string FormatSeconds(int seconds)
     {
-        if (seconds < 60) return $"{seconds}s";
-        int m = seconds / 60, s = seconds % 60;
-        return s == 0 ? $"{m}min" : $"{m}min{s}s";
+        if (seconds < 60)
+        {
+            return $"{seconds}s";
+        }
+
+        int minutes = seconds / 60;
+        int remainderSeconds = seconds % 60;
+        return remainderSeconds == 0 ? $"{minutes}min" : $"{minutes}min{remainderSeconds}s";
     }
 }

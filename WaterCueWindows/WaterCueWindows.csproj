@@ -11,6 +11,8 @@
     <LangVersion>12</LangVersion>
     <ApplicationIcon>Resources\tray.ico</ApplicationIcon>
     <StartupObject>WaterCueWindows.App</StartupObject>
+    <NuGetAudit>false</NuGetAudit>
+    <NoWarn>$(NoWarn);NU1701</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
