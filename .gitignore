@@ -21,3 +21,7 @@ WaterCueWindows/publish/
 *.keychain
 # settings.json pode conter API key se o usuário editar manualmente
 WaterCueWindows/settings.json
+
+# ── Ferramentas ──────────────────────────────────
+.maestri
+/docs
