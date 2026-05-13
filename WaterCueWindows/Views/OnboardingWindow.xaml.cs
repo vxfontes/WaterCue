@@ -54,97 +54,67 @@ public partial class OnboardingWindow : Window
         {
             var border = new Border
             {
-                Width = i == current ? 28 : 8,
-                Height = 6,
-                CornerRadius = new CornerRadius(3),
-                Margin = new Thickness(4, 0, 4, 0),
-                Background = i <= current
-                    ? new SolidColorBrush(Color.FromRgb(0x27, 0xB7, 0xF5))
-                    : new SolidColorBrush(Color.FromArgb(0x40, 0xFF, 0xFF, 0xFF))
+                Width = i == current ? 36 : 18,
+                Height = 8,
+                CornerRadius = new CornerRadius(999),
+                Margin = new Thickness(0, 0, 8, 0),
+                Background = i <= current ? Brush("AccentBrush") : Brush("SurfaceBrush")
             };
             ProgressDots.Items.Add(border);
         }
     }
 
-    private static TextBlock H1(string text) => new()
+    private TextBlock H1(string text) => new()
     {
         Text = text,
-        FontFamily = new FontFamily("Segoe UI Variable, Segoe UI"),
-        FontSize = 24,
-        FontWeight = FontWeights.Bold,
-        Foreground = Brushes.White,
-        HorizontalAlignment = HorizontalAlignment.Center,
+        FontFamily = new FontFamily("Segoe UI Variable Display, Segoe UI Variable, Segoe UI"),
+        FontSize = 27,
+        FontWeight = FontWeights.SemiBold,
+        Foreground = Brush("TextPrimaryBrush"),
         TextWrapping = TextWrapping.Wrap,
-        TextAlignment = TextAlignment.Center,
+        TextAlignment = TextAlignment.Left,
         Margin = new Thickness(0, 0, 0, 8)
     };
 
-    private static TextBlock Body(string text) => new()
+    private TextBlock Body(string text) => new()
     {
         Text = text,
-        FontFamily = new FontFamily("Segoe UI Variable, Segoe UI"),
         FontSize = 13,
-        Foreground = new SolidColorBrush(Color.FromRgb(0x8A, 0x9B, 0xBF)),
-        HorizontalAlignment = HorizontalAlignment.Center,
+        Foreground = Brush("TextSecondaryBrush"),
         TextWrapping = TextWrapping.Wrap,
-        TextAlignment = TextAlignment.Center,
-        Margin = new Thickness(0, 0, 0, 20)
+        TextAlignment = TextAlignment.Left,
+        Margin = new Thickness(0, 0, 0, 18)
     };
 
-    private static TextBlock EmojiIcon(string emoji, double size = 48) => new()
+    private TextBlock Badge(string text) => new()
     {
-        Text = emoji,
-        FontSize = size,
-        HorizontalAlignment = HorizontalAlignment.Center,
-        Margin = new Thickness(0, 0, 0, 12)
+        Text = text,
+        FontSize = 11,
+        FontWeight = FontWeights.SemiBold,
+        Foreground = Brush("AccentBrush"),
+        Margin = new Thickness(0, 0, 0, 10)
     };
 
     private Button PrimaryButton(string label, RoutedEventHandler handler)
     {
         var btn = new Button
         {
-            Height = 42,
-            Cursor = System.Windows.Input.Cursors.Hand,
-            Margin = new Thickness(0, 4, 0, 4),
-            Template = BuildPrimaryTemplate(),
-            Content = new TextBlock
-            {
-                Text = label,
-                Foreground = Brushes.White,
-                FontSize = 14,
-                FontWeight = FontWeights.SemiBold,
-                FontFamily = new FontFamily("Segoe UI Variable, Segoe UI")
-            }
+            Content = label,
+            Style = (Style)FindResource("PrimaryButtonStyle"),
+            HorizontalAlignment = HorizontalAlignment.Left,
+            MinWidth = 150,
+            Margin = new Thickness(0, 4, 0, 0)
         };
-
         btn.Click += handler;
         return btn;
     }
 
-    private static ControlTemplate BuildPrimaryTemplate()
-    {
-        var tpl = new ControlTemplate(typeof(Button));
-        var factory = new FrameworkElementFactory(typeof(Border));
-        factory.SetValue(Border.CornerRadiusProperty, new CornerRadius(8));
-        factory.SetValue(
-            Border.BackgroundProperty,
-            new LinearGradientBrush(Color.FromRgb(0x27, 0xB7, 0xF5), Color.FromRgb(0x00, 0x77, 0xC8), 0));
-
-        var cp = new FrameworkElementFactory(typeof(ContentPresenter));
-        cp.SetValue(ContentPresenter.HorizontalAlignmentProperty, HorizontalAlignment.Center);
-        cp.SetValue(ContentPresenter.VerticalAlignmentProperty, VerticalAlignment.Center);
-        factory.AppendChild(cp);
-
-        tpl.VisualTree = factory;
-        return tpl;
-    }
-
-    private static Border InfoCard(UIElement content)
+    private Border InfoCard(UIElement content)
     {
         return new Border
         {
-            Background = new SolidColorBrush(Color.FromArgb(0x20, 0xFF, 0xFF, 0xFF)),
-            CornerRadius = new CornerRadius(12),
+            Style = (Style)FindResource("CardBorderStyle"),
+            Background = Brush("BackgroundBrush"),
             Padding = new Thickness(16),
             Margin = new Thickness(0, 0, 0, 16),
             Child = content
@@ -153,80 +123,73 @@ public partial class OnboardingWindow : Window
 
     private void BuildWelcome()
     {
-        StepContent.Children.Add(EmojiIcon("\U0001F4A7", 64));
-        StepContent.Children.Add(H1("Bem-vindo ao WaterCue"));
+        StepContent.Children.Add(Badge("PASSO 1 DE 5"));
+        StepContent.Children.Add(H1("Configure o WaterCue para o seu Windows"));
         StepContent.Children.Add(Body(
-            "Vou travar seu Windows periodicamente ate voce beber agua e comprovar com uma foto. "
-            + "No Windows, notificacoes funcionam direto e a configuracao da camera fica em um passo so."));
+            "Este assistente prepara camera, IA e intervalos com uma interface mais desktop. "
+            + "As notificacoes ja funcionam nativamente no Windows."));
+
+        StepContent.Children.Add(InfoCard(new StackPanel
+        {
+            Children =
+            {
+                SummaryLine("Fluxo de camera em um passo"),
+                SummaryLine("Tray e janelas com visual de app do Windows"),
+                SummaryLine("Bloqueio e desbloqueio continuam iguais")
+            }
+        }));
+
         StepContent.Children.Add(PrimaryButton("Comecar", (_, _) => GoNext()));
     }
 
     private void BuildCameraSetup()
     {
-        StepContent.Children.Add(EmojiIcon("\U0001F4F7", 48));
-        StepContent.Children.Add(H1("Configurar camera"));
+        StepContent.Children.Add(Badge("PASSO 2 DE 5"));
+        StepContent.Children.Add(H1("Escolha a camera"));
         StepContent.Children.Add(Body(
-            "Aqui nao tem pedido extra de permissao. Escolha a camera que o app vai usar "
-            + "para validar sua hidratacao."));
+            "No Windows nao existe etapa extra de permissao dentro do app. "
+            + "Basta selecionar qual camera deve ser usada na validacao."));
 
         var cameras = CameraService.Shared.AvailableCameras();
-        var hasCamera = cameras.Count > 0;
+        bool hasCamera = cameras.Count > 0;
 
-        StepContent.Children.Add(new TextBlock
+        StepContent.Children.Add(new Border
         {
-            Text = hasCamera ? "Camera detectada" : "Nenhuma camera detectada agora",
-            FontSize = 13,
-            Foreground = hasCamera
-                ? new SolidColorBrush(Color.FromRgb(0x30, 0xC0, 0x60))
-                : new SolidColorBrush(Color.FromRgb(0xE8, 0xA0, 0x20)),
-            HorizontalAlignment = HorizontalAlignment.Center,
-            Margin = new Thickness(0, 0, 0, 12)
+            Background = hasCamera ? Brush("AccentDimBrush") : Brush("BackgroundBrush"),
+            BorderBrush = hasCamera ? Brush("CardBorderBrush") : Brush("WarningBrush"),
+            BorderThickness = new Thickness(1),
+            CornerRadius = new CornerRadius(10),
+            Padding = new Thickness(12),
+            Margin = new Thickness(0, 0, 0, 16),
+            Child = new TextBlock
+            {
+                Text = hasCamera ? "Camera detectada e pronta para configuracao." : "Nenhuma camera detectada no momento.",
+                Foreground = hasCamera ? Brush("TextPrimaryBrush") : Brush("WarningBrush"),
+                FontSize = 12
+            }
         });
 
         var listBox = new ListBox
         {
-            Background = Brushes.Transparent,
-            BorderThickness = new Thickness(0),
-            Margin = new Thickness(0, 0, 0, 16)
+            Background = Brush("InputBrush"),
+            BorderBrush = Brush("InputBorderBrush"),
+            BorderThickness = new Thickness(1),
+            Margin = new Thickness(0, 0, 0, 0)
         };
-
         listBox.Items.Add(new ListBoxItem
         {
-            Content = new StackPanel
-            {
-                Children =
-                {
-                    new TextBlock
-                    {
-                        Text = "Automatico",
-                        FontSize = 13,
-                        Foreground = Brushes.White,
-                        FontWeight = FontWeights.SemiBold
-                    },
-                    new TextBlock
-                    {
-                        Text = "Usa a camera padrao do sistema",
-                        FontSize = 11,
-                        Foreground = new SolidColorBrush(Color.FromRgb(0x8A, 0x9B, 0xBF))
-                    }
-                }
-            },
+            Content = "Automatico (camera padrao do sistema)",
             Tag = string.Empty,
-            Padding = new Thickness(8, 6, 8, 6)
+            Padding = new Thickness(8)
         });
 
         foreach (var cam in cameras)
         {
             listBox.Items.Add(new ListBoxItem
             {
-                Content = new TextBlock
-                {
-                    Text = cam.Name,
-                    FontSize = 13,
-                    Foreground = Brushes.White
-                },
+                Content = cam.Name,
                 Tag = cam.MonikerString,
-                Padding = new Thickness(8, 6, 8, 6)
+                Padding = new Thickness(8)
             });
         }
 
@@ -260,33 +223,50 @@ public partial class OnboardingWindow : Window
 
     private void BuildApiKey()
     {
-        StepContent.Children.Add(EmojiIcon("\U0001F916", 48));
-        StepContent.Children.Add(H1("Chave Groq"));
+        StepContent.Children.Add(Badge("PASSO 3 DE 5"));
+        StepContent.Children.Add(H1("Conecte a Groq API"));
         StepContent.Children.Add(Body(
-            "A IA do Groq analisa sua foto. Cole a chave abaixo. "
-            + "Ela fica guardada com protecao do proprio Windows no seu perfil local."));
+            "A validacao da foto usa o modelo configurado aqui. "
+            + "A chave fica protegida no seu perfil do Windows."));
 
         var keyBox = new PasswordBox
         {
-            Height = 36,
-            FontSize = 13,
-            Padding = new Thickness(10, 8, 10, 8),
-            Background = new SolidColorBrush(Color.FromRgb(0x1A, 0x29, 0x40)),
-            Foreground = Brushes.White,
-            BorderBrush = new SolidColorBrush(Color.FromRgb(0x2D, 0x6B, 0xE4)),
-            BorderThickness = new Thickness(1),
+            Style = (Style)FindResource("InputPasswordBoxStyle"),
             Margin = new Thickness(0, 0, 0, 8)
         };
 
         var errorLabel = new TextBlock
         {
             FontSize = 11,
-            Foreground = new SolidColorBrush(Color.FromRgb(0xE8, 0x40, 0x40)),
+            Foreground = Brush("DangerBrush"),
             Visibility = Visibility.Collapsed,
             Margin = new Thickness(0, 0, 0, 8)
         };
 
-        var saveBtn = PrimaryButton("Salvar e continuar", (_, _) =>
+        var link = new TextBlock
+        {
+            Text = "Criar chave gratis em console.groq.com",
+            Foreground = Brush("AccentBrush"),
+            FontSize = 12,
+            Cursor = System.Windows.Input.Cursors.Hand,
+            Margin = new Thickness(0, 0, 0, 10)
+        };
+        link.MouseDown += (_, _) =>
+            System.Diagnostics.Process.Start(
+                new System.Diagnostics.ProcessStartInfo("https://console.groq.com/keys") { UseShellExecute = true });
+
+        StepContent.Children.Add(InfoCard(new StackPanel
+        {
+            Children =
+            {
+                FieldLabel("Groq API Key"),
+                keyBox,
+                errorLabel,
+                link
+            }
+        }));
+
+        StepContent.Children.Add(PrimaryButton("Salvar e continuar", (_, _) =>
         {
             var key = keyBox.Password.Trim();
             if (key.Length < 20)
@@ -299,7 +279,6 @@ public partial class OnboardingWindow : Window
             try
             {
                 SettingsService.Shared.SaveApiKey(key);
-                errorLabel.Visibility = Visibility.Collapsed;
                 GoNext();
             }
             catch (Exception ex)
@@ -307,122 +286,46 @@ public partial class OnboardingWindow : Window
                 errorLabel.Text = ex.Message;
                 errorLabel.Visibility = Visibility.Visible;
             }
-        });
-
-        var linkLabel = new TextBlock
-        {
-            FontSize = 11,
-            Foreground = new SolidColorBrush(Color.FromRgb(0x27, 0xB7, 0xF5)),
-            Cursor = System.Windows.Input.Cursors.Hand,
-            Text = "Criar chave gratis em console.groq.com",
-            Margin = new Thickness(0, 4, 0, 12)
-        };
-        linkLabel.MouseDown += (_, _) =>
-            System.Diagnostics.Process.Start(
-                new System.Diagnostics.ProcessStartInfo("https://console.groq.com/keys") { UseShellExecute = true });
-
-        StepContent.Children.Add(keyBox);
-        StepContent.Children.Add(errorLabel);
-        StepContent.Children.Add(linkLabel);
-        StepContent.Children.Add(saveBtn);
+        }));
     }
 
     private void BuildIntervals()
     {
-        StepContent.Children.Add(EmojiIcon("\u23F1", 48));
-        StepContent.Children.Add(H1("Configurar intervalos"));
-        StepContent.Children.Add(Body("Ajuste quando o Windows trava e quanto tempo depois o botao de emergencia aparece."));
+        StepContent.Children.Add(Badge("PASSO 4 DE 5"));
+        StepContent.Children.Add(H1("Defina os intervalos"));
+        StepContent.Children.Add(Body(
+            "Esses valores controlam quando a tela bloqueia e quanto tempo demora para liberar a saida de emergencia."));
 
         var settings = AppState.Shared.Settings;
         var panel = new StackPanel();
 
-        var intervalLabel = new TextBlock
-        {
-            Text = FormatInterval(settings.IntervalSeconds / 60),
-            FontSize = 13,
-            Foreground = Brushes.White,
-            FontWeight = FontWeights.SemiBold
-        };
+        panel.Children.Add(MakeSlider(
+            "Bloquear a cada",
+            settings.IntervalSeconds / 60.0,
+            15,
+            240,
+            15,
+            v =>
+            {
+                settings.IntervalSeconds = (int)v * 60;
+                settings.Save();
+                AppState.Shared.Settings = settings;
+            },
+            v => FormatInterval((int)v)));
 
-        var intervalRow = new Grid();
-        intervalRow.ColumnDefinitions.Add(new ColumnDefinition());
-        intervalRow.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-
-        var intervalTitle = new TextBlock
-        {
-            Text = "Travar a cada",
-            FontSize = 13,
-            Foreground = new SolidColorBrush(Color.FromRgb(0x8A, 0x9B, 0xBF))
-        };
-
-        Grid.SetColumn(intervalTitle, 0);
-        Grid.SetColumn(intervalLabel, 1);
-        intervalRow.Children.Add(intervalTitle);
-        intervalRow.Children.Add(intervalLabel);
-        panel.Children.Add(intervalRow);
-
-        var intervalSlider = new Slider
-        {
-            Minimum = 15,
-            Maximum = 240,
-            TickFrequency = 15,
-            IsSnapToTickEnabled = true,
-            Value = settings.IntervalSeconds / 60.0,
-            Margin = new Thickness(0, 4, 0, 16)
-        };
-        intervalSlider.ValueChanged += (_, e) =>
-        {
-            var currentSettings = AppState.Shared.Settings;
-            currentSettings.IntervalSeconds = (int)e.NewValue * 60;
-            currentSettings.Save();
-            AppState.Shared.Settings = currentSettings;
-            intervalLabel.Text = FormatInterval((int)e.NewValue);
-        };
-        panel.Children.Add(intervalSlider);
-
-        var emergencyLabel = new TextBlock
-        {
-            Text = FormatSeconds(settings.EmergencyDelaySeconds),
-            FontSize = 13,
-            Foreground = Brushes.White,
-            FontWeight = FontWeights.SemiBold
-        };
-
-        var emergencyRow = new Grid();
-        emergencyRow.ColumnDefinitions.Add(new ColumnDefinition());
-        emergencyRow.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-
-        var emergencyTitle = new TextBlock
-        {
-            Text = "Emergencia apos",
-            FontSize = 13,
-            Foreground = new SolidColorBrush(Color.FromRgb(0xE8, 0xA0, 0x20))
-        };
-
-        Grid.SetColumn(emergencyTitle, 0);
-        Grid.SetColumn(emergencyLabel, 1);
-        emergencyRow.Children.Add(emergencyTitle);
-        emergencyRow.Children.Add(emergencyLabel);
-        panel.Children.Add(emergencyRow);
-
-        var emergencySlider = new Slider
-        {
-            Minimum = 10,
-            Maximum = 300,
-            TickFrequency = 10,
-            IsSnapToTickEnabled = true,
-            Value = settings.EmergencyDelaySeconds,
-            Margin = new Thickness(0, 4, 0, 4)
-        };
-        emergencySlider.ValueChanged += (_, e) =>
-        {
-            var currentSettings = AppState.Shared.Settings;
-            currentSettings.EmergencyDelaySeconds = (int)e.NewValue;
-            currentSettings.Save();
-            AppState.Shared.Settings = currentSettings;
-            emergencyLabel.Text = FormatSeconds((int)e.NewValue);
-        };
-        panel.Children.Add(emergencySlider);
+        panel.Children.Add(MakeSlider(
+            "Emergencia apos",
+            settings.EmergencyDelaySeconds,
+            10,
+            300,
+            10,
+            v =>
+            {
+                settings.EmergencyDelaySeconds = (int)v;
+                settings.Save();
+                AppState.Shared.Settings = settings;
+            },
+            v => FormatSeconds((int)v)));
 
         StepContent.Children.Add(InfoCard(panel));
         StepContent.Children.Add(PrimaryButton("Continuar", (_, _) => GoNext()));
@@ -430,11 +333,11 @@ public partial class OnboardingWindow : Window
 
     private void BuildDone()
     {
-        StepContent.Children.Add(EmojiIcon("\u2705", 64));
+        StepContent.Children.Add(Badge("PASSO 5 DE 5"));
         StepContent.Children.Add(H1("Tudo pronto"));
         StepContent.Children.Add(Body(
-            $"O WaterCue vai travar seu Windows a cada {FormatInterval(AppState.Shared.Settings.IntervalSeconds / 60)}. "
-            + "Fique de olho no icone da bandeja."));
+            $"O WaterCue vai travar o Windows a cada {FormatInterval(AppState.Shared.Settings.IntervalSeconds / 60)}. "
+            + "A gota continua na bandeja para abrir estatisticas e configuracoes."));
 
         StepContent.Children.Add(PrimaryButton("Comecar agora", (_, _) =>
         {
@@ -445,6 +348,76 @@ public partial class OnboardingWindow : Window
             Close();
         }));
     }
+
+    private StackPanel MakeSlider(
+        string title,
+        double initialValue,
+        double min,
+        double max,
+        double tick,
+        Action<double> onChange,
+        Func<double, string> format)
+    {
+        var panel = new StackPanel { Margin = new Thickness(0, 0, 0, 16) };
+        var row = new Grid();
+        row.ColumnDefinitions.Add(new ColumnDefinition());
+        row.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+
+        var titleBlock = new TextBlock
+        {
+            Text = title,
+            Foreground = Brush("TextPrimaryBrush"),
+            FontSize = 13,
+            FontWeight = FontWeights.SemiBold
+        };
+        var valueBlock = new TextBlock
+        {
+            Text = format(initialValue),
+            Foreground = Brush("AccentBrush"),
+            FontSize = 13,
+            FontWeight = FontWeights.SemiBold
+        };
+
+        Grid.SetColumn(titleBlock, 0);
+        Grid.SetColumn(valueBlock, 1);
+        row.Children.Add(titleBlock);
+        row.Children.Add(valueBlock);
+
+        var slider = new Slider
+        {
+            Minimum = min,
+            Maximum = max,
+            TickFrequency = tick,
+            IsSnapToTickEnabled = true,
+            Value = initialValue,
+            Style = (Style)FindResource("PanelSliderStyle")
+        };
+        slider.ValueChanged += (_, e) =>
+        {
+            valueBlock.Text = format(e.NewValue);
+            onChange(e.NewValue);
+        };
+
+        panel.Children.Add(row);
+        panel.Children.Add(slider);
+        return panel;
+    }
+
+    private TextBlock SummaryLine(string text) => new()
+    {
+        Text = text,
+        Foreground = Brush("TextPrimaryBrush"),
+        FontSize = 13,
+        Margin = new Thickness(0, 0, 0, 8)
+    };
+
+    private TextBlock FieldLabel(string text) => new()
+    {
+        Text = text,
+        Style = (Style)FindResource("FieldLabelTextStyle")
+    };
+
+    private Brush Brush(string key) => (Brush)FindResource(key);
 
     private static string FormatInterval(int minutes)
     {

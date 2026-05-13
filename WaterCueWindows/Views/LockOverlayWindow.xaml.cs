@@ -1,9 +1,7 @@
 using System.ComponentModel;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
-using WaterCueWindows;
 using WaterCueWindows.Services;
 
 namespace WaterCueWindows.Views;
@@ -13,15 +11,13 @@ public partial class LockOverlayWindow : Window
     private readonly DispatcherTimer _emergencyTimer = new() { Interval = TimeSpan.FromSeconds(1) };
     private int _emergencyElapsed;
 
-    // LockService determines if this is the primary window (has camera)
-    public bool IsPrimary { get; set; } = false;
+    public bool IsPrimary { get; set; }
 
     public LockOverlayWindow()
     {
         InitializeComponent();
 
         _emergencyTimer.Tick += OnEmergencyTick;
-
         AppState.Shared.PropertyChanged += OnAppStateChanged;
         CameraService.Shared.LiveFrameReady += OnLiveFrame;
 
@@ -31,7 +27,6 @@ public partial class LockOverlayWindow : Window
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
-        // After LockService sets IsPrimary, show correct content
         if (IsPrimary)
         {
             PrimaryContent.Visibility = Visibility.Visible;
@@ -57,70 +52,91 @@ public partial class LockOverlayWindow : Window
 
     private void OnLiveFrame(object? sender, System.Windows.Media.Imaging.BitmapSource frame)
     {
-        if (!IsPrimary) return;
+        if (!IsPrimary)
+        {
+            return;
+        }
+
         Dispatcher.InvokeAsync(() =>
         {
             CameraPreview.Source = frame;
             if (NoCameraOverlay.Visibility == Visibility.Visible)
+            {
                 UpdateCameraStatusUI();
+            }
         });
     }
 
     private void OnAppStateChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (!IsPrimary) return;
+        if (!IsPrimary)
+        {
+            return;
+        }
+
         Dispatcher.Invoke(() =>
         {
             if (e.PropertyName == nameof(AppState.LockState))
+            {
                 UpdateLockStateUI(AppState.Shared.LockState);
+            }
+
             if (e.PropertyName == nameof(AppState.ValidationFailedReason))
+            {
                 FailedReasonLabel.Text = AppState.Shared.ValidationFailedReason;
+            }
         });
     }
 
     private void UpdateCameraStatusUI()
     {
-        var cam = CameraService.Shared;
-        bool running = cam.IsRunning;
+        var camera = CameraService.Shared;
+        bool running = camera.IsRunning;
 
         NoCameraOverlay.Visibility = running ? Visibility.Collapsed : Visibility.Visible;
         CaptureButton.IsEnabled = running && AppState.Shared.LockState == LockState.Locked;
-        CaptureButtonLabel.Text = running ? "📷  Capturar foto" : "Aguardando câmera…";
-        CaptureButtonLabel.Foreground = running
-            ? Brushes.Black
-            : new SolidColorBrush(Color.FromArgb(0x66, 0xFF, 0xFF, 0xFF));
+        CaptureButtonLabel.Text = running ? "Capturar foto" : "Aguardando câmera...";
+        CaptureButtonLabel.Foreground = Brushes.White;
 
-        if (cam.Error != null)
+        if (camera.Error != null)
         {
-            CameraStatusIcon.Text = "🚫";
-            CameraStatusLabel.Text = "Câmera bloqueada.";
+            CameraStatusIcon.Text = "ERRO";
+            CameraStatusLabel.Text = "Câmera indisponível ou bloqueada.";
             RetryButton.Visibility = Visibility.Visible;
         }
         else if (!running)
         {
-            CameraStatusIcon.Text = "📷";
-            CameraStatusLabel.Text = "Iniciando câmera…";
+            CameraStatusIcon.Text = "CAM";
+            CameraStatusLabel.Text = "Iniciando câmera...";
             RetryButton.Visibility = Visibility.Collapsed;
         }
 
-        CameraGlow.Opacity = running ? 0.35 : 0;
+        CameraGlow.Opacity = running ? 0.3 : 0;
         CameraRingBrush.Color = running
-            ? Color.FromArgb(0x80, 0x27, 0xB7, 0xF5)
-            : Color.FromArgb(0x1F, 0xFF, 0xFF, 0xFF);
+            ? Color.FromArgb(0x75, 0x3A, 0xA0, 0xF3)
+            : Color.FromArgb(0x24, 0xFF, 0xFF, 0xFF);
     }
 
     private void UpdateLockStateUI(LockState state)
     {
-        if (!IsPrimary) return;
+        if (!IsPrimary)
+        {
+            return;
+        }
+
         CameraPanel.Visibility = state == LockState.Locked ? Visibility.Visible : Visibility.Collapsed;
         ValidatingPanel.Visibility = state == LockState.Validating ? Visibility.Visible : Visibility.Collapsed;
         FailedPanel.Visibility = state == LockState.ValidationFailed ? Visibility.Visible : Visibility.Collapsed;
 
         if (state == LockState.ValidationFailed)
+        {
             FailedReasonLabel.Text = AppState.Shared.ValidationFailedReason;
+        }
 
         if (state == LockState.Locked)
+        {
             UpdateCameraStatusUI();
+        }
     }
 
     private void StartEmergencyCountdown()
@@ -174,6 +190,8 @@ public partial class LockOverlayWindow : Window
             MessageBoxImage.Warning);
 
         if (result == MessageBoxResult.Yes)
+        {
             AppState.Shared.EmergencyUnlock();
+        }
     }
 }

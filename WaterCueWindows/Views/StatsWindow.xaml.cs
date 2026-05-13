@@ -3,8 +3,6 @@ using System.Windows.Media;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
-using WaterCueWindows;
-using WaterCueWindows.Services;
 
 namespace WaterCueWindows.Views;
 
@@ -20,22 +18,22 @@ public partial class StatsWindow : Window
     {
         var state = AppState.Shared;
 
-        TodayLabel.Text = $"{state.CupsToday} / {state.Settings.DailyGoal} copos";
+        TodayLabel.Text = $"{state.CupsToday} / {state.Settings.DailyGoal}";
         TodayLabel.Foreground = state.CupsToday >= state.Settings.DailyGoal
-            ? new SolidColorBrush(Color.FromRgb(0x30, 0xC0, 0x60))
-            : Brushes.White;
+            ? (Brush)FindResource("SuccessBrush")
+            : (Brush)FindResource("TextPrimaryBrush");
 
         StreakLabel.Text = $"{state.CurrentStreak} dias";
         StreakLabel.Foreground = state.CurrentStreak > 0
-            ? new SolidColorBrush(Color.FromRgb(0xE8, 0xA0, 0x20))
-            : new SolidColorBrush(Color.FromRgb(0x8A, 0x9B, 0xBF));
+            ? (Brush)FindResource("WarningBrush")
+            : (Brush)FindResource("TextSecondaryBrush");
 
         BuildChart(state);
     }
 
     private void BuildChart(AppState state)
     {
-        var weekly = LoadWeeklyCounts(state);
+        var weekly = LoadWeeklyCounts();
         if (weekly.Count == 0)
         {
             WeeklyChart.Visibility = Visibility.Collapsed;
@@ -46,80 +44,73 @@ public partial class StatsWindow : Window
         {
             Background = OxyColors.Transparent,
             PlotAreaBackground = OxyColors.Transparent,
-            TextColor = OxyColor.FromRgb(0x8A, 0x9B, 0xBF),
+            TextColor = OxyColor.FromRgb(0x5E, 0x65, 0x73),
             PlotAreaBorderThickness = new OxyThickness(0)
         };
 
-        // CategoryAxis on Bottom + LinearAxis on Left = vertical column chart
-        var xAxis = new CategoryAxis
+        var categoryAxis = new CategoryAxis
         {
-            Position = AxisPosition.Bottom,
-            TextColor = OxyColor.FromRgb(0x8A, 0x9B, 0xBF),
+            Position = AxisPosition.Left,
+            TextColor = OxyColor.FromRgb(0x5E, 0x65, 0x73),
             TicklineColor = OxyColors.Transparent,
             MajorGridlineColor = OxyColors.Transparent,
             MinorGridlineColor = OxyColors.Transparent,
             FontSize = 11,
-            GapWidth = 0.4
+            GapWidth = 0.55
         };
 
-        var yAxis = new LinearAxis
+        var valueAxis = new LinearAxis
         {
-            Position = AxisPosition.Left,
-            TextColor = OxyColor.FromRgb(0x8A, 0x9B, 0xBF),
+            Position = AxisPosition.Bottom,
+            TextColor = OxyColor.FromRgb(0x8A, 0x93, 0xA4),
             TicklineColor = OxyColors.Transparent,
-            MajorGridlineStyle = LineStyle.Dot,
-            MajorGridlineColor = OxyColor.FromArgb(0x20, 0x8A, 0x9B, 0xBF),
+            MajorGridlineStyle = LineStyle.Solid,
+            MajorGridlineColor = OxyColor.FromArgb(0x18, 0x5E, 0x65, 0x73),
             MinorGridlineColor = OxyColors.Transparent,
             Minimum = 0,
-            MajorStep = 2,
-            FontSize = 11
+            IsAxisVisible = false
         };
 
-        // Use BarSeries + CategoryAxis on Left for horizontal chart
-        // and swap orientation for vertical display using CategoryAxis(Bottom)
         var series = new BarSeries
         {
-            FillColor = OxyColor.FromRgb(0x27, 0xB7, 0xF5),
+            FillColor = OxyColor.FromRgb(0x0F, 0x6C, 0xBD),
             StrokeThickness = 0,
-            IsStacked = false
+            BarWidth = 0.58
         };
 
         int dailyGoal = state.Settings.DailyGoal;
-        // OxyPlot BarSeries is horizontal — category axis is on Y (Left)
-        // Swap: put CategoryAxis on Left for the BarSeries horizontal chart
-        xAxis.Position = AxisPosition.Left;
-        yAxis.Position = AxisPosition.Bottom;
-        yAxis.IsAxisVisible = false;
-
         foreach (var (day, count) in weekly)
         {
-            xAxis.Labels.Add(FormatDay(day));
+            categoryAxis.Labels.Add(FormatDay(day));
             series.Items.Add(new BarItem
             {
                 Value = count,
                 Color = count >= dailyGoal
-                    ? OxyColor.FromRgb(0x27, 0xB7, 0xF5)
-                    : OxyColor.FromArgb(0x66, 0x27, 0xB7, 0xF5)
+                    ? OxyColor.FromRgb(0x0F, 0x6C, 0xBD)
+                    : OxyColor.FromArgb(0x66, 0x0F, 0x6C, 0xBD)
             });
         }
 
-        model.Axes.Add(xAxis);
-        model.Axes.Add(yAxis);
+        model.Axes.Add(categoryAxis);
+        model.Axes.Add(valueAxis);
         model.Series.Add(series);
 
         WeeklyChart.Model = model;
         WeeklyChart.Visibility = Visibility.Visible;
     }
 
-    private static List<(string day, int count)> LoadWeeklyCounts(AppState state)
+    private static List<(string day, int count)> LoadWeeklyCounts()
     {
         try
         {
-            return DatabaseService.Shared.WeeklyCounts()
+            return Services.DatabaseService.Shared.WeeklyCounts()
                 .Select(d => (d.Day, d.Count))
                 .ToList();
         }
-        catch { return []; }
+        catch
+        {
+            return [];
+        }
     }
 
     private static string FormatDay(string day)
@@ -129,6 +120,7 @@ public partial class StatsWindow : Window
             var formatter = new System.Globalization.CultureInfo("pt-BR");
             return date.ToString("ddd", formatter);
         }
+
         return day[^2..];
     }
 }

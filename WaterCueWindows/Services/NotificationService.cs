@@ -19,21 +19,19 @@ public class NotificationService
         _trayIcon.TrayBalloonTipClicked += OnBalloonClicked;
     }
 
-    // Schedules a warning balloon immediately (WPF balloons don't support delay scheduling)
     public void ScheduleWarning(int secondsUntilLock)
     {
         var minutes = Math.Max(1, secondsUntilLock / 60);
-        ShowBalloon("WaterCue ⚡", $"Beba água agora — tela trava em {minutes} minuto(s)!");
+        ShowBalloon("WaterCue", $"Beba água agora. A tela trava em {minutes} minuto(s).");
     }
 
     public void CancelWarning()
     {
-        // Balloon tips can't be cancelled once shown; no-op.
     }
 
     public void SendUnlockCelebration()
     {
-        ShowBalloon("WaterCue ✅", "Boa! Hidratação validada. Até a próxima.");
+        ShowBalloon("WaterCue", "Boa! Hidratação validada. Até a próxima.");
     }
 
     private void ShowBalloon(string title, string message)
