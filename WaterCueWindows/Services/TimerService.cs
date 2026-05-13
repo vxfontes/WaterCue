@@ -6,11 +6,15 @@ namespace WaterCueWindows.Services;
 
 public class TimerService
 {
-    public static readonly TimerService Shared = new();
+    private static readonly string StateDir = Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) is { Length: > 0 } appData
+            ? appData
+            : Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+        "WaterCue");
 
-    private static readonly string StatePath = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-        "WaterCue", "timer_state.json");
+    private static readonly string StatePath = Path.Combine(StateDir, "timer_state.json");
+
+    public static readonly TimerService Shared = new();
 
     public event EventHandler? OnWarning;
     public event EventHandler? OnLock;
@@ -106,7 +110,7 @@ public class TimerService
     {
         try
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(StatePath)!);
+            Directory.CreateDirectory(StateDir);
             var epoch = new DateTimeOffset(date).ToUnixTimeMilliseconds() / 1000.0;
             File.WriteAllText(StatePath, $"{{\"nextLock\":{epoch}}}");
         }

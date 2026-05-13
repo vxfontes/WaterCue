@@ -12,13 +12,28 @@ public partial class App : Application
     private TaskbarIcon? _trayIcon;
     private TrayIconManager? _trayManager;
 
+    private static readonly string LogPath = Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "watercue_debug.log");
+
+    private static void Log(string msg)
+        => File.AppendAllText(LogPath, $"{DateTime.Now:HH:mm:ss.fff} {msg}\n");
+
     protected override void OnStartup(StartupEventArgs e)
     {
+        AppDomain.CurrentDomain.UnhandledException += (_, ex)
+            => Log($"UNHANDLED: {ex.ExceptionObject}");
+        DispatcherUnhandledException += (_, ex)
+            => Log($"DISPATCHER: {ex.Exception}");
+
+        Log("OnStartup begin");
         base.OnStartup(e);
         ShutdownMode = ShutdownMode.OnExplicitShutdown;
+        Log("ShutdownMode set");
 
         _trayIcon = (TaskbarIcon?)FindResource("TrayIcon");
+        Log($"TrayIcon: {(_trayIcon == null ? "null" : "ok")}");
 
+        Log("Injecting services");
         // Inject concrete services into AppState
         var state = AppState.Shared;
         state.TimerService     = TimerService.Shared;
@@ -100,15 +115,24 @@ public partial class App : Application
             }
         };
 
+        Log("Creating TrayIconManager");
         // Tray icon manager (context menu + dynamic items)
         if (_trayIcon != null)
             _trayManager = new TrayIconManager(_trayIcon);
 
+        Log($"NeedsOnboarding check");
         // Start or onboard
-        if (NeedsOnboarding(state))
+        bool onboard = NeedsOnboarding(state);
+        Log($"NeedsOnboarding={onboard}");
+        if (onboard)
+        {
+            Log("Showing OnboardingWindow");
             new OnboardingWindow().Show();
+            Log("OnboardingWindow shown");
+        }
         else
             StartApp(state);
+        Log("OnStartup complete");
     }
 
     private static bool NeedsOnboarding(AppState state)

@@ -6,9 +6,13 @@ namespace WaterCueWindows.Models;
 
 public class HydrationSettings
 {
-    private static readonly string SettingsPath = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-        "WaterCue", "settings.json");
+    private static readonly string SettingsDir = Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) is { Length: > 0 } appData
+            ? appData
+            : Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+        "WaterCue");
+
+    private static readonly string SettingsPath = Path.Combine(SettingsDir, "settings.json");
 
     public int IntervalSeconds { get; set; } = 3600;
     public int WarningSeconds { get; set; } = 60;
@@ -35,7 +39,7 @@ public class HydrationSettings
 
     public void Save()
     {
-        Directory.CreateDirectory(Path.GetDirectoryName(SettingsPath)!);
+        Directory.CreateDirectory(SettingsDir);
         var json = JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true });
         File.WriteAllText(SettingsPath, json);
     }

@@ -7,15 +7,19 @@ namespace WaterCueWindows.Services;
 
 public class DatabaseService
 {
-    public static readonly DatabaseService Shared = new();
+    private static readonly string DbDir = Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) is { Length: > 0 } appData
+            ? appData
+            : Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+        "WaterCue");
 
-    private static readonly string DbPath = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-        "WaterCue", "hydration.sqlite");
+    private static readonly string DbPath = Path.Combine(DbDir, "hydration.sqlite");
+
+    public static readonly DatabaseService Shared = new();
 
     private DatabaseService()
     {
-        Directory.CreateDirectory(Path.GetDirectoryName(DbPath)!);
+        Directory.CreateDirectory(DbDir);
         CreateSchema();
     }
 

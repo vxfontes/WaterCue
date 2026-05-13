@@ -9,7 +9,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>12</LangVersion>
-<StartupObject>WaterCueWindows.App</StartupObject>
+    <ApplicationIcon>Resources\tray.ico</ApplicationIcon>
+    <StartupObject>WaterCueWindows.App</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,6 +22,7 @@
 
   <ItemGroup>
     <Resource Include="Resources\AppColors.xaml" />
+    <Resource Include="Resources\tray.ico" />
   </ItemGroup>
 
 </Project>
