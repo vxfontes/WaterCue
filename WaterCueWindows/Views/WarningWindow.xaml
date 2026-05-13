@@ -1,0 +1,117 @@
+<Window x:Class="WaterCueWindows.Views.WarningWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Width="340" SizeToContent="Height"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Topmost="True"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        ShowInTaskbar="False">
+
+    <Border Background="{StaticResource BackgroundBrush}"
+            CornerRadius="12"
+            BorderBrush="{StaticResource SurfaceBrush}"
+            BorderThickness="1"
+            MouseDown="Border_MouseDown">
+        <Border.Effect>
+            <DropShadowEffect Color="#FF000000" BlurRadius="32" ShadowDepth="0" Opacity="0.7"/>
+        </Border.Effect>
+
+        <StackPanel Margin="28,28,28,28" >
+
+            <!-- Header -->
+            <StackPanel HorizontalAlignment="Center">
+                <TextBlock Text="💧"
+                           FontSize="44"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,10"/>
+
+                <TextBlock Text="Hora de beber água!"
+                           FontFamily="Segoe UI Variable, Segoe UI"
+                           FontSize="18"
+                           FontWeight="Bold"
+                           Foreground="{StaticResource TextPrimaryBrush}"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,6"/>
+
+                <TextBlock x:Name="CountdownLabel"
+                           FontFamily="Segoe UI Variable, Segoe UI"
+                           FontSize="13"
+                           Foreground="{StaticResource TextSecondaryBrush}"
+                           HorizontalAlignment="Center"
+                           TextWrapping="Wrap"
+                           TextAlignment="Center"/>
+            </StackPanel>
+
+            <!-- Buttons -->
+            <StackPanel Margin="0,20,0,0">
+                <!-- Primary: Já bebi! -->
+                <Button x:Name="DrinkButton"
+                        Height="42"
+                        Margin="0,0,0,8"
+                        Click="DrinkButton_Click"
+                        Cursor="Hand">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="8" Cursor="Hand">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Color="#FF27B7F5" Offset="0"/>
+                                        <GradientStop Color="#FF0077C8" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Opacity" Value="0.88"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Opacity" Value="0.75"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <TextBlock Text="💧  Já bebi!"
+                               Foreground="White"
+                               FontWeight="SemiBold"
+                               FontSize="14"
+                               FontFamily="Segoe UI Variable, Segoe UI"/>
+                </Button>
+
+                <!-- Secondary: Snooze -->
+                <Button x:Name="SnoozeButton"
+                        Height="36"
+                        Click="SnoozeButton_Click"
+                        Cursor="Hand">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="8"
+                                    Background="Transparent"
+                                    BorderBrush="{StaticResource SurfaceBrush}"
+                                    BorderThickness="1"
+                                    Cursor="Hand">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Opacity" Value="0.75"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Opacity" Value="0.55"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <TextBlock Text="🌙  Não posso agora  (+5 min)"
+                               Foreground="{StaticResource TextSecondaryBrush}"
+                               FontSize="13"
+                               FontFamily="Segoe UI Variable, Segoe UI"/>
+                </Button>
+            </StackPanel>
+
+        </StackPanel>
+    </Border>
+</Window>

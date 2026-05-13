@@ -1,7 +1,23 @@
+# ── macOS / Xcode ──────────────────────────────
 .DS_Store
 xcuserdata/
 *.xcuserstate
 build/
 DerivedData/
+*.xcarchive
+
+# ── Windows / .NET / Visual Studio ─────────────
+WaterCueWindows/bin/
+WaterCueWindows/obj/
+WaterCueWindows/.vs/
+WaterCueWindows/publish/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ── Secrets / env ───────────────────────────────
 .env
 *.keychain
+# settings.json pode conter API key se o usuário editar manualmente
+WaterCueWindows/settings.json

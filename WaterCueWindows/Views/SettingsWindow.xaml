@@ -1,0 +1,82 @@
+<Window x:Class="WaterCueWindows.Views.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="WaterCue — Configurações"
+        Width="440" Height="580"
+        ResizeMode="NoResize"
+        WindowStyle="SingleBorderWindow"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+            <GradientStop Color="#FF0D1117" Offset="0"/>
+            <GradientStop Color="#FF0D1B2E" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title -->
+        <TextBlock Grid.Row="0"
+                   Text="Configurações"
+                   FontFamily="Segoe UI Variable, Segoe UI"
+                   FontSize="22" FontWeight="Bold"
+                   Foreground="White"
+                   Margin="0,0,0,20"/>
+
+        <!-- Sections -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel x:Name="SettingsPanel" />
+        </ScrollViewer>
+
+        <!-- Action buttons -->
+        <Grid Grid.Row="2" Margin="0,16,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="CancelBtn"
+                    Grid.Column="0"
+                    Content="Cancelar"
+                    Height="36"
+                    Click="Cancel_Click"
+                    Foreground="{StaticResource TextSecondaryBrush}"
+                    Background="Transparent"
+                    BorderBrush="{StaticResource SurfaceBrush}"
+                    BorderThickness="1"/>
+
+            <Button x:Name="SaveBtn"
+                    Grid.Column="2"
+                    Content="Salvar"
+                    Height="36"
+                    Click="Save_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="6">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Color="#FF27B7F5" Offset="0"/>
+                                    <GradientStop Color="#FF0077C8" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.85"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+                <TextBlock Text="Salvar" Foreground="White" FontWeight="SemiBold"/>
+            </Button>
+        </Grid>
+    </Grid>
+</Window>
